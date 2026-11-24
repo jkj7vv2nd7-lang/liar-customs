@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI税関突破「嘘つきワード・ダウト」｜英語・壁打ち特化</title>
+<meta name="description" content="怪しい審査官8人の尋問に、正しい英語の言い訳で切り抜ける英語・壁打ち特化アプリ。高校受験・共通テスト・難関大まで、全33ミッションの嘘つき突破ゲーム。">
+<meta property="og:title" content="AI税関突破「嘘つきワード・ダウト」">
+<meta property="og:description" content="誤用は即・検挙。正しい英語の嘘だけが、ゲートを開く。審査官8人を騙し抜く英語トレーニング。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" href="icon-180.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+:root{
+  --ink:#1f2430; --paper:#f4f1e6; --paper2:#fffdf6;
+  --navy:#16324f; --navy2:#1f4a73; --teal:#0e7c7b; --gold:#c9962e; --gold2:#eec25e;
+  --pass:#1e8e4f; --pass2:#27ae60; --doubt:#b91c1c; --doubt2:#dc2626;
+  --shadow:0 4px 14px rgba(31,36,48,.16);
+  --ch1:#2563eb; --ch2:#0e7c7b; --ch3:#7c3aed; --ch4:#b91c1c;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+  background:#0d1622 radial-gradient(circle at 15% 0%, #274b73 0%, transparent 55%),
+             radial-gradient(circle at 90% 100%, #4d3410 0%, transparent 50%);
+  color:var(--ink); min-height:100vh;
+}
+#app{max-width:560px;margin:0 auto;min-height:100vh;background:var(--paper);
+  box-shadow:0 0 40px rgba(0,0,0,.45); position:relative; overflow:hidden;
+  display:flex; flex-direction:column;}
+.screen{display:none; flex-direction:column; flex:1; min-height:0;}
+.screen.active{display:flex;}
+button{font-family:inherit; cursor:pointer;}
+.btn{
+  border:none; border-radius:999px; padding:14px 22px; font-size:17px; font-weight:800;
+  background:linear-gradient(180deg,var(--navy2),var(--navy)); color:#fff;
+  box-shadow:0 4px 0 #0b1e33, var(--shadow); transition:transform .06s, box-shadow .06s;
+}
+.btn:active{transform:translateY(3px); box-shadow:0 1px 0 #0b1e33;}
+.btn.sub{background:linear-gradient(180deg,#fdfdfd,#eae4cf); color:var(--ink); box-shadow:0 4px 0 #b3a888, var(--shadow);}
+.btn.sub:active{box-shadow:0 1px 0 #b3a888;}
+.btn.gold{background:linear-gradient(180deg,var(--gold2),var(--gold)); color:#4a2f00; box-shadow:0 4px 0 #8a6410, var(--shadow);}
+.btn.gold:active{box-shadow:0 1px 0 #8a6410;}
+.btn:disabled{opacity:.45; pointer-events:none;}
+.btn.big{font-size:20px; padding:16px 30px; width:100%;}
+.sound-toggle{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; padding:6px 14px;
+  font-size:14px; font-weight:800;
+}
+.topbar{
+  display:flex; align-items:center; gap:8px; padding:10px 14px;
+  background:var(--paper2); border-bottom:2px solid #e7ddc2; position:sticky; top:0; z-index:5;
+}
+.topbar .tb-title{font-weight:900; font-size:15px; flex:1; line-height:1.3;}
+.back-btn{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; padding:6px 13px;
+  font-size:13.5px; font-weight:800;
+}
+.linklike{background:none;border:none;color:var(--navy2);font-weight:800;font-size:12.5px;text-decoration:underline;padding:2px;}
+/* ---------- タイトル ---------- */
+#screen-title{align-items:center; text-align:center; padding:30px 18px 16px;
+  background:linear-gradient(180deg,#cfe3f5 0%, var(--paper) 58%);}
+.title-band{
+  background:linear-gradient(90deg,var(--navy),var(--teal)); color:#fff; font-weight:900;
+  letter-spacing:.3em; padding:6px 16px 6px calc(16px + .3em); border-radius:4px; font-size:13.5px;
+  box-shadow:var(--shadow);
+}
+h1.logo{margin:14px 0 2px; font-size:36px; line-height:1.3; font-weight:900; color:var(--ink);}
+h1.logo .accent{color:var(--doubt);}
+.title-sub{font-size:15px; font-weight:700; color:#4c5a6e; margin:6px 0 2px; line-height:1.7;}
+.title-faces{display:flex; gap:6px; justify-content:center; margin:14px 0 4px; flex-wrap:wrap;}
+.title-faces .ta-face{width:52px; height:52px; background:#fff; border:2px solid #cfd8e2; border-radius:50%; padding:2px;}
+.title-stats{display:flex; gap:10px; justify-content:center; margin:12px 0 4px; flex-wrap:wrap;}
+.stat-chip{
+  background:#fff; border:2px solid #cfd8e2; border-radius:14px; padding:8px 14px;
+  font-size:13px; font-weight:800; box-shadow:var(--shadow);
+}
+.stat-chip b{font-size:19px; color:var(--navy2);}
+.title-badge{
+  display:inline-block; background:var(--gold2); color:#4a2f00; font-weight:900;
+  font-size:13.5px; border-radius:999px; padding:4px 14px; margin-top:6px;
+}
+.title-btns{display:flex; flex-direction:column; gap:12px; width:100%; max-width:340px; margin-top:16px;}
+.title-foot{margin-top:auto; padding:18px 0 4px; font-size:12px; color:#8a8171; line-height:1.7;}
+/* ---------- ステータスカード ---------- */
+.status-card{
+  margin:12px 14px 4px; background:linear-gradient(135deg,#0b1e33,#16324f 60%,#0e7c7b);
+  color:#fff; border-radius:18px; padding:14px 16px; box-shadow:var(--shadow);
+}
+.status-card .sc-big{font-size:13px; font-weight:800; opacity:.92;}
+.status-card .sc-big b{font-size:30px; line-height:1; margin-left:4px;}
+.status-card .sc-row{font-size:13px; font-weight:700; margin-top:7px; display:flex; gap:14px; flex-wrap:wrap;}
+.progress-track{height:9px; background:rgba(255,255,255,.28); border-radius:99px; margin-top:8px; overflow:hidden;}
+.progress-fill{height:100%; background:linear-gradient(90deg,var(--gold2),#f97316); border-radius:99px; transition:width .5s;}
+.screen .progress-track{background:#e7ddc2;}
+.screen .progress-fill{background:linear-gradient(90deg,var(--gold),var(--teal));}
+/* ---------- マップ ---------- */
+.level-bar{display:flex; gap:6px; flex-wrap:wrap; padding:12px 14px 2px; align-items:center;}
+.level-bar .lb-label{font-size:11.5px; font-weight:800; color:#8a8171;}
+.level-chip{
+  border:2px solid #cfd8e2; background:#fff; border-radius:999px; padding:6px 13px;
+  font-size:13px; font-weight:800;
+}
+.level-chip.active{background:var(--navy); border-color:var(--navy); color:#fff;}
+.chapter-block{padding:10px 14px 2px;}
+.chapter-head{
+  font-weight:900; font-size:16px; margin:8px 0 8px; padding-left:10px; border-left:6px solid var(--navy);
+}
+.stages{display:flex; flex-direction:column; gap:10px; padding-bottom:16px;}
+.stage-card{
+  display:flex; gap:12px; align-items:center; text-align:left; width:100%;
+  background:#fff; border:2px solid #cfd8e2; border-radius:16px; padding:12px 14px;
+  box-shadow:var(--shadow); border-left:8px solid var(--navy);
+}
+.stage-card .st-face{width:58px; height:58px; flex:none; background:var(--paper); border-radius:50%; padding:2px; border:2px solid #cfd8e2;}
+.stage-card .st-main{flex:1; min-width:0;}
+.stage-card .st-id{font-size:11.5px; font-weight:900; color:#8a8171; letter-spacing:.08em;}
+.stage-card .st-title{font-size:16.5px; font-weight:900; line-height:1.35; margin:1px 0;}
+.stage-card .st-author{font-size:13px; font-weight:700; color:#4c5a6e;}
+.stage-card .st-meta{display:flex; gap:10px; align-items:center; margin-top:5px;}
+.stage-card .st-prog{font-size:12.5px; font-weight:800; color:var(--navy2);}
+.mini-track{flex:1; height:7px; background:#dde5ec; border-radius:99px; overflow:hidden;}
+.mini-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--teal));}
+/* ---------- 紹介 ---------- */
+.intro-body{padding:14px 16px 8px; overflow-y:auto;}
+.intro-level{
+  display:inline-block; background:#dbe7f3; border-radius:999px; padding:3px 12px;
+  font-size:12px; font-weight:800; color:#33506e;
+}
+.intro-body h2{font-size:21px; line-height:1.4; margin:10px 0 12px;}
+.author-profile{
+  display:flex; gap:14px; background:#fff; border:2px solid #cfd8e2; border-radius:16px;
+  padding:14px; box-shadow:var(--shadow); align-items:flex-start;
+}
+.author-profile .ap-avatar{width:96px; height:96px; flex:none; background:var(--paper); border-radius:50%; padding:3px; border:2px solid #cfd8e2;}
+.ap-name{font-size:18px; font-weight:900; line-height:1.35;}
+.ap-genre{font-size:12.5px; font-weight:800; color:var(--navy2); margin-top:2px;}
+.ap-quirk{font-size:13.5px; line-height:1.6; color:#4c4658; margin-top:5px;}
+.greeting{
+  margin-top:12px; background:#eef5fb; border:2px dashed #9db8d2; border-radius:14px;
+  padding:12px 14px; font-size:15px; line-height:1.75;
+}
+.intro-list-head{font-weight:900; font-size:14px; margin:16px 0 6px;}
+.iv-list{display:flex; flex-direction:column; gap:7px;}
+.iv-item{
+  display:flex; gap:10px; align-items:center; background:#fff; border:2px solid #e7ddc2;
+  border-radius:12px; padding:9px 12px; font-size:14px;
+}
+.iv-item .iv-state{font-size:11px; font-weight:900; border-radius:999px; padding:2px 9px; flex:none;}
+.iv-state.done{background:#bbf7d0; color:#14532d;}
+.iv-state.weak{background:#fecaca; color:#7f1d1d;}
+.iv-state.todo{background:#e5e0d0; color:#6b6552;}
+.intro-btns{padding:12px 16px 18px; display:flex; flex-direction:column; gap:10px;}
+/* ---------- セッション ---------- */
+#screen-session{background:var(--paper);}
+.session-head{
+  padding:10px 14px 8px; background:var(--paper2); border-bottom:2px solid #e7ddc2;
+  position:sticky; top:0; z-index:5;
+}
+.sh-row{display:flex; align-items:center; gap:8px;}
+.sh-row .gh-stage{font-size:12px; font-weight:900; color:#8a8171; letter-spacing:.05em;}
+.sh-row .gh-topic{flex:1; font-size:13.5px; font-weight:800; line-height:1.3; min-width:0;}
+.sh-row .gh-count{font-size:12.5px; font-weight:900; color:var(--navy2);}
+.session-author{
+  display:flex; gap:12px; align-items:center; padding:10px 14px 4px;
+}
+.session-author .sa-face{width:74px; height:74px; flex:none; background:#fff; border-radius:50%; padding:3px; border:2px solid #cfd8e2; position:relative;}
+.session-author .sa-face.aura{box-shadow:0 0 0 4px var(--pass2), 0 0 26px 8px rgba(39,174,96,.6);}
+.session-author .sa-name{font-size:16px; font-weight:900;}
+.session-author .sa-int{font-size:12.5px; font-weight:800; color:var(--navy2);}
+.situation-card{
+  margin:8px 14px 4px; background:#fffdf6; border:2px solid #d9c98a; border-radius:14px;
+  padding:12px 14px; box-shadow:var(--shadow);
+}
+.situation-card .pc-label{font-size:11px; font-weight:900; letter-spacing:.2em; color:#8a6d1f;}
+.situation-card .pc-text{font-size:15.5px; line-height:1.85; margin-top:4px;}
+.situation-card .goal{
+  margin-top:9px; background:#eef5fb; border:1.5px dashed #7aa3c7; border-radius:10px;
+  padding:8px 11px; font-size:14px; line-height:1.65; font-weight:700; color:#274b73;
+}
+.situation-card .goal .g-label{font-size:11px; font-weight:900; letter-spacing:.14em; color:#33506e; display:block;}
+#dialogue-feed{flex:1; overflow-y:auto; padding:10px 14px; display:flex; flex-direction:column; gap:10px; min-height:120px;}
+.msg{
+  max-width:88%; border-radius:16px; padding:10px 13px; font-size:15px; line-height:1.75;
+  box-shadow:var(--shadow); white-space:pre-wrap; word-break:break-word; position:relative;
+}
+.msg .msg-who{
+  display:block; font-size:11px; font-weight:900; letter-spacing:.06em; margin-bottom:3px;
+}
+.msg.author{background:#fff; border:2px solid #cfd8e2; align-self:flex-start; border-bottom-left-radius:4px;}
+.msg.author .msg-who{color:var(--navy2);}
+.msg.user{background:linear-gradient(180deg,#fdf3d0,#fbe9b7); border:2px solid #e3cf8d; align-self:flex-end; border-bottom-right-radius:4px;}
+.msg.user .msg-who{color:#8a6d1f;}
+.msg.pushback{background:#fdf0f0; border:2px solid #d88a8a; align-self:flex-start; border-bottom-left-radius:4px;}
+.msg.pushback .msg-who{color:#a11d1d;}
+.msg.pushback .misuse{display:block; margin-top:6px; font-size:12.5px; font-weight:800; color:#7f1d1d; background:#fee2e2; border-radius:8px; padding:5px 9px;}
+.msg.pass{background:linear-gradient(180deg,#eafaf0,#d3f4e0); border:2px solid var(--pass); align-self:flex-start; border-bottom-left-radius:4px;}
+.msg.pass .msg-who{color:var(--pass);}
+.msg.memo{background:#eef4f4; border:2px solid #9db8b8; align-self:stretch; max-width:100%;}
+.msg.memo .msg-who{color:var(--teal);}
+.stamp-card{
+  margin:2px 0; background:linear-gradient(135deg,#0d3b21,#1e8e4f); color:#eafff2;
+  border-radius:14px; padding:12px 14px; box-shadow:var(--shadow); align-self:stretch; max-width:100%;
+}
+.stamp-card .hc-label{font-size:11px; font-weight:900; letter-spacing:.18em; color:var(--gold2);}
+.stamp-card .hc-stamp{
+  display:inline-block; margin-top:7px; border:3px solid #eafff2; border-radius:9px;
+  padding:3px 13px; font-size:17px; font-weight:900; letter-spacing:.06em; transform:rotate(-3deg);
+  background:rgba(255,255,255,.12);
+}
+.stamp-card .hc-text{font-size:15.5px; line-height:1.8; margin-top:9px; white-space:pre-wrap; font-weight:700;}
+.stamp-card .hc-gain{font-size:12.5px; font-weight:900; color:#fff; margin-top:6px;}
+.strategy-card{
+  background:#fff; border:2px solid var(--teal); border-radius:14px; padding:12px 14px;
+  box-shadow:var(--shadow); align-self:stretch; max-width:100%;
+}
+.strategy-card .sc-head{font-weight:900; font-size:15.5px; color:var(--teal); line-height:1.5;}
+.strategy-card .sc-label{font-size:11px; font-weight:900; letter-spacing:.14em; color:#8a8171; margin-top:8px;}
+.strategy-card .sc-text{font-size:14.5px; line-height:1.75; margin-top:2px;}
+.strategy-card .sc-text.trap{color:#a11d1d;}
+#input-area{padding:10px 14px 14px; background:var(--paper2); border-top:2px solid #e7ddc2;}
+#input-area textarea{
+  width:100%; min-height:74px; border:2px solid #d9c98a; border-radius:14px; padding:11px 12px;
+  font-size:16px; line-height:1.6; font-family:inherit; background:#fff; resize:vertical;
+}
+.hint-chips{display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 2px; align-items:center;}
+.hint-chips .hc-label2{font-size:11px; font-weight:900; color:#8a8171;}
+.hint-chip{
+  background:#eef5fb; border:1.5px dashed #7aa3c7; color:#274b73; border-radius:999px;
+  padding:4px 11px; font-size:12.5px; font-weight:700;
+}
+.free-row{display:flex; gap:10px; margin-top:9px; align-items:stretch;}
+.free-row .btn{flex:1;}
+.mic-btn{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; width:56px; flex:none;
+  display:flex; align-items:center; justify-content:center;
+}
+.mic-btn.rec{background:#fecaca; border-color:#a11d1d;}
+.choices{display:flex; flex-direction:column; gap:9px;}
+.choice-btn{
+  text-align:left; background:#fff; border:2px solid #d9c98a; border-radius:14px;
+  padding:12px 13px; font-size:15px; line-height:1.65; box-shadow:var(--shadow);
+  display:flex; gap:9px; align-items:flex-start;
+}
+.choice-btn .ch-id{
+  flex:none; background:var(--navy); color:#fff; font-weight:900; border-radius:8px;
+  padding:1px 9px; font-size:13px; margin-top:2px;
+}
+.choice-btn:active{transform:scale(.99);}
+.giveup-row{margin-top:10px; text-align:center;}
+#next-row{padding:10px 14px 16px; background:var(--paper2); border-top:2px solid #e7ddc2;}
+.shake{animation:shake .45s;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.lean{animation:lean .6s;}
+@keyframes lean{0%{transform:scale(1)}40%{transform:scale(1.13) rotate(-2deg)}100%{transform:scale(1.05)}}
+/* ---------- 結果 ---------- */
+.result-body{padding:18px 16px; overflow-y:auto; text-align:center;}
+.result-body .r-int{font-size:14px; font-weight:800; color:#4c5a6e;}
+.result-body .r-int b{font-size:38px; color:var(--navy2);}
+.result-list{margin:16px 0; text-align:left; display:flex; flex-direction:column; gap:8px;}
+.result-item{
+  display:flex; justify-content:space-between; gap:12px; background:#fff; border:2px solid #e7ddc2;
+  border-radius:12px; padding:10px 13px; font-size:14.5px;
+}
+.result-item span:last-child{font-weight:900; text-align:right;}
+.result-btns{display:flex; flex-direction:column; gap:10px; margin-top:8px;}
+/* ---------- スタンプ帳 ---------- */
+.memo-body{padding:12px 14px 18px; overflow-y:auto;}
+.memo-author-head{display:flex; gap:11px; align-items:center; margin:14px 0 8px;}
+.memo-author-head .ma-face{width:52px; height:52px; background:#fff; border-radius:50%; padding:2px; border:2px solid #cfd8e2;}
+.memo-author-head .ma-name{font-size:16.5px; font-weight:900;}
+.memo-author-head .ma-int{font-size:12px; font-weight:800; color:var(--navy2);}
+.memo-item{background:#fff; border:2px solid #e7ddc2; border-radius:14px; padding:11px 13px; margin-bottom:9px;}
+.memo-item .mi-topic{font-weight:900; font-size:14.5px; line-height:1.45;}
+.memo-item .mi-meta{font-size:11.5px; font-weight:800; color:#8a8171; margin-top:2px;}
+.memo-item .mi-stamp{
+  display:inline-block; margin-top:8px; border:3px solid var(--pass); color:var(--pass);
+  border-radius:9px; padding:3px 12px; font-size:14.5px; font-weight:900; transform:rotate(-2.5deg);
+  background:#f0fdf4; letter-spacing:.04em;
+}
+.memo-item .mi-honne{font-size:14.5px; line-height:1.75; margin-top:8px; background:#eefaf2; border-radius:10px; padding:9px 11px; font-weight:700;}
+.memo-item .mi-strategy{font-size:13.5px; line-height:1.7; margin-top:7px; color:#14532d;}
+.memo-item .mi-locked{font-size:13.5px; color:#8a8171; margin-top:6px; line-height:1.6;}
+.memo-item .mi-row{display:flex; justify-content:flex-end; margin-top:8px;}
+.memo-item .mi-row .btn{padding:9px 18px; font-size:14px;}
+.empty-note{
+  text-align:center; color:#8a8171; font-size:14.5px; line-height:1.8; padding:26px 10px;
+}
+/* ---------- 演出 ---------- */
+#confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:60;}
+#fx-flash{position:fixed; inset:0; background:#fff8d6; opacity:0; pointer-events:none; z-index:55; transition:opacity .5s;}
+#fx-stamp{
+  position:fixed; left:50%; top:34%; transform:translate(-50%,-50%) rotate(-10deg) scale(3);
+  border:5px solid var(--pass); color:var(--pass); border-radius:12px; padding:6px 22px;
+  font-size:30px; font-weight:900; letter-spacing:.08em; opacity:0; pointer-events:none; z-index:61;
+  background:rgba(255,253,246,.88); max-width:88vw; text-align:center; line-height:1.3;
+}
+#fx-stamp.doubt{border-color:var(--doubt); color:var(--doubt);}
+#fx-stamp.show{animation:stamp .9s forwards;}
+@keyframes stamp{0%{opacity:0; transform:translate(-50%,-50%) rotate(-10deg) scale(3)}
+  35%{opacity:1; transform:translate(-50%,-50%) rotate(-10deg) scale(1)}
+  80%{opacity:1} 100%{opacity:0; transform:translate(-50%,-50%) rotate(-10deg) scale(.96)}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- タイトル -->
+  <section class="screen" id="screen-title">
+    <div class="title-band">AI税関突破</div>
+    <h1 class="logo">嘘つき<br><span class="accent">ワード・ダウト</span></h1>
+    <p class="title-sub">怪しい審査官8人が、キミの言い訳を待っている。<br>誤用は即・検挙。正しい英語の嘘だけが、ゲートを開く。</p>
+    <div class="title-faces" id="title-faces"></div>
+    <div class="title-stats">
+      <span class="stat-chip">バウンティ <b id="title-bounty">0</b>/925</span>
+      <span class="stat-chip">獲得スタンプ <b id="title-stamps">0</b>/33</span>
+    </div>
+    <div><span class="title-badge" id="title-rank">素直な旅行者</span></div>
+    <div class="title-btns">
+      <button class="btn big gold" id="btn-to-map">税関ゲートへ進む</button>
+      <button class="btn big sub" id="btn-to-memo">獲得スタンプ帳（<span id="title-weak">0</span>件リベンジ待ち）</button>
+    </div>
+    <div class="title-foot">
+      <button class="sound-toggle" id="sound-toggle-title">音：オン</button><br>
+      バージョン 1.0.0<br>
+      <button class="linklike" id="btn-update">最新の版に更新する</button><br>
+      © AI税関突破「嘘つきワード・ダウト」
+    </div>
+  </section>
+
+  <!-- マップ -->
+  <section class="screen" id="screen-map">
+    <div class="topbar">
+      <button class="back-btn" id="btn-back-title">← タイトル</button>
+      <div class="tb-title">税関ゲート（マップ）</div>
+      <button class="sound-toggle" id="sound-toggle-map">音：オン</button>
+    </div>
+    <div class="status-card">
+      <div class="sc-big">キミの懸賞金（バウンティ）<b id="map-bounty">0</b></div>
+      <span class="title-badge" id="map-rank">素直な旅行者</span>
+      <div class="sc-row">
+        <span>スタンプ <span id="map-stamps">0</span>/33</span>
+        <span>コンボ <span id="map-combo">0</span>（最高 <span id="map-best">0</span>）</span>
+        <span>リベンジ待ち <span id="map-weak">0</span>件</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="map-progress" style="width:0%"></div></div>
+    </div>
+    <div class="level-bar" id="level-bar">
+      <span class="lb-label">レベル絞込:</span>
+    </div>
+    <div id="chapters-box"></div>
+  </section>
+
+  <!-- ステージ紹介 -->
+  <section class="screen" id="screen-intro">
+    <div class="topbar">
+      <button class="back-btn" id="btn-back-map">← マップ</button>
+      <div class="tb-title" id="intro-crumb">ゲート紹介</div>
+    </div>
+    <div class="intro-body">
+      <span class="intro-level" id="intro-level"></span>
+      <h2 id="intro-title"></h2>
+      <div class="author-profile">
+        <div class="ap-avatar" id="intro-avatar"></div>
+        <div>
+          <div class="ap-name" id="intro-author-name"></div>
+          <div class="ap-genre" id="intro-author-genre"></div>
+          <div class="ap-quirk" id="intro-author-quirk"></div>
+        </div>
+      </div>
+      <div class="greeting" id="intro-greeting"></div>
+      <div class="intro-list-head">このゲートの尋問（<span id="intro-count"></span>問）</div>
+      <div class="iv-list" id="intro-list"></div>
+    </div>
+    <div class="intro-btns">
+      <button class="btn big gold" id="btn-start-stage">審査開始！</button>
+      <button class="btn sub" id="btn-intro-memo">獲得スタンプ帳を見る</button>
+    </div>
+  </section>
+
+  <!-- セッション -->
+  <section class="screen" id="screen-session">
+    <div class="session-head">
+      <div class="sh-row">
+        <button class="back-btn" id="btn-quit-session">← やめる</button>
+        <span class="gh-stage" id="session-stage-badge"></span>
+        <span class="gh-topic" id="session-topic"></span>
+        <span class="gh-count" id="session-count"></span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="session-progress" style="width:0%"></div></div>
+    </div>
+    <div class="session-author" id="session-card">
+      <div class="sa-face" id="session-avatar"></div>
+      <div>
+        <div class="sa-name" id="session-author-name"></div>
+        <div class="sa-int" id="session-author-int"></div>
+      </div>
+    </div>
+    <div class="situation-card">
+      <div class="pc-label">状況 ― いまのピンチ</div>
+      <div class="pc-text" id="situation-text"></div>
+      <div class="goal"><span class="g-label">嘘の目標</span><span id="goal-text"></span></div>
+    </div>
+    <div id="dialogue-feed"></div>
+    <div id="input-area"></div>
+    <div id="next-row" style="display:none;">
+      <button class="btn big gold" id="btn-next-mission">次の尋問へ →</button>
+    </div>
+  </section>
+
+  <!-- 結果 -->
+  <section class="screen" id="screen-result">
+    <div class="topbar">
+      <div class="tb-title">審査結果</div>
+    </div>
+    <div class="result-body">
+      <div class="r-int">バウンティ<b id="result-bounty">0</b></div>
+      <div><span class="title-badge" id="result-rank">素直な旅行者</span></div>
+      <div class="result-list" id="result-list"></div>
+      <div class="result-btns">
+        <button class="btn big gold" id="btn-result-map">税関ゲートへ戻る</button>
+        <button class="btn big sub" id="btn-result-memo">獲得スタンプ帳を見る（リベンジ待ち <span id="result-weak">0</span>件）</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- スタンプ帳 -->
+  <section class="screen" id="screen-memo">
+    <div class="topbar">
+      <button class="back-btn" id="btn-memo-back">← 戻る</button>
+      <div class="tb-title">獲得スタンプ帳（パスポート）</div>
+      <button class="sound-toggle" id="sound-toggle-memo">音：オン</button>
+    </div>
+    <div class="memo-body" id="memo-body"></div>
+  </section>
+</div>
+<canvas id="confetti-canvas"></canvas>
+<div id="fx-flash"></div>
+<div id="fx-stamp">PASS!</div>
+<script>
+"use strict";
+const CHAPTERS = [{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・基礎英語パスポート突破","stages":[{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・基礎英語パスポート突破","stage_id":"C-1","stage_title":"鬼先生ゲート：遅刻＆宿題忘れのデタラメ言い訳","target_level":"高校受験・基礎","inspector":{"id":"teacher_oni","name":"鬼塚先生（英語科・生活指導）","role":"校門の遅刻チェック担当","opening_line":"おい！チャイム鳴ったぞ！英語で納得のいく言い訳を言えたら通してやるが、文法ミスったら即居残りだ！"},"missions":[{"mission_id":"C1_M01","topic_tag":"現在完了形 vs 過去形（yesterday）","weakness_category":"customs_present_perfect","input_mode":"lie_choice","situation":"宿題を忘れた言い訳として『昨日、宇宙人に宿題を盗まれたんです！』と嘘をつきたい。","target_lie_goal":"「昨日〜された」を正しい時制で言い切る","inspector_question":"なんでノートを持ってきてないんだ！？英語で言い訳してみろ！","choices":[{"id":"A","label":"Aliens stole my homework yesterday!"},{"id":"B","label":"Aliens have stolen my homework yesterday!"}],"correct_answer":{"canonical_english":"Aliens stole my homework yesterday!","acceptable_keywords":["stole"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C1_01A","trigger":["B"],"misuse_meaning":"現在完了形に yesterday をくっつける文法違反","comedy_tsukkomi":"ブッブー！『have stolen（現在完了）』と『yesterday（過去の一点）』を一緒に使うな！宇宙人よりその時制ミスのほうがミステリーだわ！居残り！"}],"pass_reaction":{"inspector_line":"くっ…『yesterday』があるからしっかり単純過去形 `stole` を使ってきやがったな！宇宙人に盗まれたなら仕方ない、通ってよし！","stamp_text":"PASS! 遅刻免除","bounty_points":20},"exam_note":{"headline":"現在完了形（have + p.p.）は yesterday / ago / When と併用不可","rule":"過去の明確な時刻を表す語があるときは単純過去形を使う。","pitfall":"高校入試の空欄補充・誤文訂正で毎年のように出題される鉄板トラップ！"}},{"mission_id":"C1_M02","topic_tag":"must not（禁止）vs don't have to（不要）","weakness_category":"customs_must_haveto","input_mode":"lie_compose","situation":"制服じゃなくパジャマで登校した言い訳：『医者に「今日は制服を着る必要はない」と言われたんです！』","target_lie_goal":"「〜する必要はない」を正しく英語で表現する（don't have to / need to）","inspector_question":"お前、なぜパジャマで学校に来た！？医者に何を言われたんだ！？","choices":[],"correct_answer":{"canonical_english":"I don't have to wear a uniform today!","acceptable_keywords":["don't have to","do not have to","don't need to","needn't"]},"trap_comedies":[{"trap_id":"T_C1_02A","trigger":["must not","mustn't","can't"],"misuse_meaning":"「制服を着てはいけない（禁止）」という謎の校則違反宣言","comedy_tsukkomi":"待て！『must not』だと『俺は今日制服を着ることを法律で禁止されている！』になるぞｗ どんな呪いだよ！『〜する必要はない』は別だろ！"}],"pass_reaction":{"inspector_line":"なるほど『don't have to（着る必要はない）』か…！医者の指示ならパジャマ登校もやむを得んな、通ってよし！","stamp_text":"PASS! パジャマ公認","bounty_points":25},"exam_note":{"headline":"don't have to＝「〜する必要はない（不要）」 / must not＝「〜してはいけない（禁止）」","rule":"肯定の must と have to はほぼ同じだが、否定になると意味が全く別物になる。","pitfall":"「必要がない」と言いたいときに must not を使わないこと！"}},{"mission_id":"C1_M03","topic_tag":"前置詞をつけない他動詞（discuss / enter / marry）","weakness_category":"customs_vt_no_prep","input_mode":"lie_choice","situation":"遅刻の言い訳：『実は今朝、道端で猫と世界の平和について議論していたんです！』","target_lie_goal":"discuss を使って「〜について議論する」を誤用なく言う","inspector_question":"30分も遅刻して何をしてたんだ！？","choices":[{"id":"A","label":"I discussed world peace with a cat!"},{"id":"B","label":"I discussed about world peace with a cat!"}],"correct_answer":{"canonical_english":"I discussed world peace with a cat!","acceptable_keywords":["discussed world peace"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C1_03A","trigger":["B"],"misuse_meaning":"discuss に about を付けてしまう重言","comedy_tsukkomi":"ダウト！『discuss about』だと『世界平和についてについて議論した』になるぞ！猫も呆れて逃げ出すわ！前置詞はいらん！"}],"pass_reaction":{"inspector_line":"おお、他動詞 `discuss` に about を付けず完璧に使いこなしたな！猫との平和会議なら大義名分がある、通れ！","stamp_text":"PASS! 猫会議承認","bounty_points":20},"exam_note":{"headline":"前置詞不要の他動詞：discuss（〜について議論する）/ enter（〜に入る）/ marry（〜と結婚する）","rule":"talk about の感覚で discuss about と書かないように注意。","pitfall":"reach to Tokyo（×）→ reach Tokyo（○）、attend at（×）→ attend（○）もセット！"}},{"mission_id":"C1_M04","topic_tag":"時・条件の副詞節（未来でも現在形）","weakness_category":"customs_if_present","input_mode":"lie_choice","situation":"明日休みたい言い訳：『もし明日雨が降ったら、私は空飛ぶ傘の実験をしないといけないんです！』","target_lie_goal":"If の中は未来のことでも現在形（rains）を使う","inspector_question":"明日も学校に来るんだろうな？休む理由があるなら言ってみろ！","choices":[{"id":"A","label":"If it rains tomorrow, I will have to test my flying umbrella!"},{"id":"B","label":"If it will rain tomorrow, I will have to test my flying umbrella!"}],"correct_answer":{"canonical_english":"If it rains tomorrow, I will have to test my flying umbrella!","acceptable_keywords":["rains"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C1_04A","trigger":["B"],"misuse_meaning":"if 節の中に will を入れてしまう時制ミス","comedy_tsukkomi":"ブブー！『tomorrow』があっても `If（もし〜なら）` の中は現在形 `rains` にするんだ！三単現の -s も忘れるな！"}],"pass_reaction":{"inspector_line":"くっ…`If it rains` としっかり現在形に直してきやがった！空飛ぶ傘の実験なら応援する、通ってよし！","stamp_text":"PASS! 傘実験承認","bounty_points":20},"exam_note":{"headline":"時・条件を表す副詞節（if / when / until）では未来でも現在形","rule":"主節（後ろの文）は will を使うが、if / when の中は現在形。","pitfall":"「〜かどうか（名詞節）」の if のときは will を使ってOKなので混同しないこと！"}}]},{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・基礎英語パスポート突破","stage_id":"C-2","stage_title":"空港手荷物ゲート：怪しい持ち込み品の言い訳","target_level":"高校受験・基礎","inspector":{"id":"customs_officer_k","name":"検疫官・ケイ","role":"第1ターミナル手荷物検査官","opening_line":"ちょっと止まりなさい！そのスーツケースから変な音がしてるわよ？英語で納得いく説明ができなければ没収よ！"},"missions":[{"mission_id":"C2_M01","topic_tag":"stop -ing vs stop to do","weakness_category":"customs_stop_ing","input_mode":"lie_choice","situation":"スーツケースからタバコの匂いがする！『私は去年、タバコを吸うのを完全にやめました（ただの消臭剤です）！』と言い抜けろ。","target_lie_goal":"「〜するのをやめる」を stop で正しく表現する","inspector_question":"怪しいわね！あなたタバコを密輸してるんじゃないの！？","choices":[{"id":"A","label":"No! I stopped smoking last year!"},{"id":"B","label":"No! I stopped to smoke last year!"}],"correct_answer":{"canonical_english":"No! I stopped smoking last year!","acceptable_keywords":["stopped smoking"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C2_01A","trigger":["B"],"misuse_meaning":"「タバコを吸うために（立ち）止まった」という自白","comedy_tsukkomi":"待てｗ『I stopped to smoke』だと『私は去年タバコを吸うためにわざわざ立ち止まりました！』って元気に吸ってる自白になっとるわ！はい没収！"}],"pass_reaction":{"inspector_line":"完璧な動名詞 `stopped smoking` ね！それならただの匂い移りね、通ってよし！","stamp_text":"PASS! 禁煙証明","bounty_points":20},"exam_note":{"headline":"stop -ing（〜するのをやめる） vs stop to do（〜するために立ち止まる）","rule":"remember / forget / regret ＋ -ing（過去の〜したこと） vs ＋ to do（これからの〜すること）。","pitfall":"高校入試・共通テストどちらでも超定番の意味逆転問題！"}},{"mission_id":"C2_M02","topic_tag":"感情分詞（exciting vs excited）","weakness_category":"customs_emotion_ed","input_mode":"lie_compose","situation":"荷物から謎のロケット花火が100本出てきた！『海外旅行にすごくワクワクしてたんです（ただのお祝い用です）！』と可愛く言いくるめろ。","target_lie_goal":"主語 I（人）で「ワクワクしている」を正しく使う（excited）","inspector_question":"なんでこんなに花火を持ち込んでるの！？落ち着きなさい！","choices":[],"correct_answer":{"canonical_english":"I was very excited about the trip!","acceptable_keywords":["excited"]},"trap_comedies":[{"trap_id":"T_C2_02A","trigger":["exciting","excite"],"misuse_meaning":"「私は周りを興奮させる危険人物だ」という宣言","comedy_tsukkomi":"おい！『I was exciting!』だと『俺は周りを大興奮させるヤバい男なんだぜ！』っていう危険物宣言になるぞｗ 自分がワクワクさせられる側だろ！"}],"pass_reaction":{"inspector_line":"なるほど、人が主語だから `excited` ね！お祝いなら1本くらい見過ごしてあげるわ、通ってよし！","stamp_text":"PASS! ワクワク許可","bounty_points":25},"exam_note":{"headline":"感情動詞：人が主語→過去分詞(-ed) / モノ・コトが主語→現在分詞(-ing)","rule":"interested / surprised / bored / disappointed もすべて同じ法則。","pitfall":"「I am boring.（私は退屈な人間だ）」と言わないように注意！"}},{"mission_id":"C2_M03","topic_tag":"間接疑問文と受動態（群動詞）","weakness_category":"customs_passive_group","input_mode":"lie_choice","situation":"変な帽子をかぶっている理由：『これは宇宙のファッションリーダーが誰か知ってますか？実は私がみんなに笑われた（注目された）魔法の帽子なんです！』","target_lie_goal":"「みんなに笑われた」を群動詞の受動態（was laughed at by）で言う","inspector_question":"なんなのその派手な帽子は！？説明しなさい！","choices":[{"id":"A","label":"I was laughed at by everyone because of this magic hat!"},{"id":"B","label":"I was laughed by everyone because of this magic hat!"}],"correct_answer":{"canonical_english":"I was laughed at by everyone because of this magic hat!","acceptable_keywords":["laughed at by"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C2_03A","trigger":["B"],"misuse_meaning":"laugh at の at を消してしまい文が成立しない","comedy_tsukkomi":"ブー！『laugh』だけじゃ『〜を笑う』にならないの！`at` と `by` が2つ並んでも消さずに残すのがルールよ！"}],"pass_reaction":{"inspector_line":"素晴らしい！`at` と `by` の2連続を恐れず残したわね！その魔法の帽子、通ってよし！","stamp_text":"PASS! 魔法帽子通過","bounty_points":20},"exam_note":{"headline":"群動詞の受動態は「前置詞＋by」の連続を消さない","rule":"be laughed at by / be taken care of by / be spoken to by。","pitfall":"前置詞が2つ並んでいると違和感で消したくなるのが受験生最大の罠！"}},{"mission_id":"C2_M04","topic_tag":"比較級の強調（much / far / even）","weakness_category":"customs_comp_emph","input_mode":"lie_choice","situation":"大きなパンを抱えている言い訳：『このパンは普通のパンより「ずっと」軽いんです（実は中身が空気だけ）！』","target_lie_goal":"比較級 lighter を強調するときに very ではなく much を使う","inspector_question":"そんな巨大なパンを持ってどこへ行くつもり！？","choices":[{"id":"A","label":"This bread is much lighter than normal bread!"},{"id":"B","label":"This bread is very lighter than normal bread!"}],"correct_answer":{"canonical_english":"This bread is much lighter than normal bread!","acceptable_keywords":["much lighter"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C2_04A","trigger":["B"],"misuse_meaning":"比較級に very をくっつける定番ミス","comedy_tsukkomi":"ダウト！比較級（-er）を強調するときに `very` は使えないの！`much / far / even / a lot` を使いなさい！"}],"pass_reaction":{"inspector_line":"ナイス `much lighter`！本当に空気みたいに軽そうね、機内持ち込みOKよ！","stamp_text":"PASS! 軽量パン許可","bounty_points":20},"exam_note":{"headline":"比較級の強調＝「much / far / even / still / a lot」（× very）","rule":"very は原級（very light）にのみ使い、最上級は by far / much を使う。","pitfall":"高校入試・共通テストで「very ＋ 比較級」の誤文訂正は鉄板！"}}]}]},{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"共通テスト・重要語法＆頻出動詞ゲート","stages":[{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"共通テスト・重要語法＆頻出動詞ゲート","stage_id":"C-3","stage_title":"疑り深い審査官ゲート：自動詞・他動詞と奪う構文","target_level":"大学受験・共通テスト","inspector":{"id":"inspector_watson","name":"ワトソン審査官","role":"国際線・語法チェック専門官","opening_line":"ふむ、私の目はごまかせんぞ。紛らわしい自動詞と他動詞、それに『奪う・提供する』の前置詞を間違えたら即別室送りだ！"},"missions":[{"mission_id":"C3_M01","topic_tag":"lie（横になる）vs lay（〜を置く）","weakness_category":"customs_lie_lay","input_mode":"lie_choice","situation":"荷物検査台のベルトコンベアに自分が横になって寝ていた言い訳：『昨日あまりに疲れて、さっきここに横になったんです！』","target_lie_goal":"「（自分が）横になった」を lie の過去形 lay で正しく言う","inspector_question":"おい！なぜ荷物検査のレーンで寝ていたんだ！？","choices":[{"id":"A","label":"I was so tired that I lay here just now!"},{"id":"B","label":"I was so tired that I laid here just now!"}],"correct_answer":{"canonical_english":"I was so tired that I lay here just now!","acceptable_keywords":["lay"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C3_01A","trigger":["B"],"misuse_meaning":"「私はここに卵（何か）を産み落とした！」になる","comedy_tsukkomi":"待てｗ『laid』は他動詞 `lay（〜を置く・卵を産む）』の過去形だ！後ろに目的語がないと『俺はここで卵を産んだ！』みたいになるぞ！横になったは `lie - lay - lain` だ！"}],"pass_reaction":{"inspector_line":"おおっ！`lie - lay - lain` の不規則変化を完璧に使いこなしたな！疲れていたなら仕方ない、通ってよし！","stamp_text":"PASS! 仮眠許可","bounty_points":25},"exam_note":{"headline":"lie（横たわる：自動詞：lie-lay-lain）vs lay（〜を横たえる/置く：他動詞：lay-laid-laid）","rule":"後ろに「〜を（目的語）」がなければ自動詞 lie の過去形 lay を使う。","pitfall":"ちなみに「嘘をつく」の lie は規則変化（lie - lied - lied）！"}},{"mission_id":"C3_M02","topic_tag":"rob 人 of 物 vs steal 物 from 人","weakness_category":"customs_rob_steal","input_mode":"lie_compose","situation":"パスポートを持っていない言い訳：『さっきカラスに私のパスポートを奪われたんです！』を rob を使って言え！","target_lie_goal":"「A crow robbed me of my passport.（人 of 物）」を正しく組み立てる","inspector_question":"パスポートはどうした！？なぜ持っていない！","choices":[],"correct_answer":{"canonical_english":"A crow robbed me of my passport!","acceptable_keywords":["robbed me of","rob me of"]},"trap_comedies":[{"trap_id":"T_C3_02A","trigger":["robbed my passport","rob my passport"],"misuse_meaning":"rob の直後に「物（パスポート）」を置いてしまう誤用","comedy_tsukkomi":"ダウト！`rob` の直後に来るのは「モノ」じゃなくて「被害者（人）」だ！`rob my passport` だとパスポート自身が強盗被害に遭ったことになるぞ！`rob 人 of 物` だ！"}],"pass_reaction":{"inspector_line":"見事な `rob 人 of 物` だ！カラスが強盗犯なら同情する、特別に通ってよし！","stamp_text":"PASS! カラス被害認定","bounty_points":30},"exam_note":{"headline":"奪う構文：「rob 人 of 物」 vs 「steal 物 from 人」","rule":"rob/deprive/cure/remind/inform ＋ 人 ＋ of ＋ 物（事）。","pitfall":"「rob 物 from 人」と steal の語順に混ぜてしまうのが大学入試最大のミス！"}},{"mission_id":"C3_M03","topic_tag":"provide 人 with 物 / provide 物 for 人","weakness_category":"customs_provide","input_mode":"lie_choice","situation":"スーツケースいっぱいのカップラーメンの言い訳：『私はお腹を空かせた宇宙人に食料を提供しているんです！』","target_lie_goal":"provide の正しい前置詞ペア（人 with 物 / 物 for 人）を選ぶ","inspector_question":"なぜこんなに大量のカップ麺を運んでいるんだ！？","choices":[{"id":"A","label":"I provide hungry aliens with food!"},{"id":"B","label":"I provide food with hungry aliens!"}],"correct_answer":{"canonical_english":"I provide hungry aliens with food!","acceptable_keywords":["provide","with food"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C3_03A","trigger":["B"],"misuse_meaning":"「私は食べ物に腹ペコの宇宙人を提供している（食べ物が宇宙人を食べる！）」になる","comedy_tsukkomi":"待てｗそれだと『ラーメンに宇宙人をトッピングして食べさせる』になるぞ！！`provide 人 with 物` だ！"}],"pass_reaction":{"inspector_line":"完璧な `provide 人 with 物` だ！宇宙人への食料支援活動なら立派なボランティアだ、通れ！","stamp_text":"PASS! 宇宙支援認定","bounty_points":25},"exam_note":{"headline":"供給構文：「provide / supply 人 with 物」＝「provide / supply 物 for(to) 人」","rule":"人が先なら with、物が先なら for（または to）。","pitfall":"共通テスト・私大の語法問題で毎年狙われる定番前置詞！"}},{"mission_id":"C3_M04","topic_tag":"apologize to 人 for 事（謝罪の語法）","weakness_category":"customs_apologize","input_mode":"lie_compose","situation":"審査官の足を踏んでしまった！『遅れたことについてあなたに謝罪します（だから見逃して）！』を apologize を使って言え。","target_lie_goal":"apologize to 人 for 事 の正しい前置詞を使う","inspector_question":"いてっ！俺の靴を踏んだな！？謝り方を知ってるのか！？","choices":[],"correct_answer":{"canonical_english":"I apologize to you for being late!","acceptable_keywords":["apologize to","apologize"]},"trap_comedies":[{"trap_id":"T_C3_04A","trigger":["apologize you","excuse to"],"misuse_meaning":"apologize の直後に人（you）を置いてしまう他動詞扱いミス","comedy_tsukkomi":"ぶっぶー！`apologize` は自動詞だから `apologize you` とは言えない！『誰々に』なら `to you`、『何々について』なら `for 〜` が必要だ！"}],"pass_reaction":{"inspector_line":"おお、`apologize to you for 〜` と礼儀正しいな！その綺麗な語法に免じて許してやろう、通れ！","stamp_text":"PASS! 紳士謝罪認定","bounty_points":25},"exam_note":{"headline":"apologize to 人 for 事（自動詞） vs excuse 人 for 事（他動詞）","rule":"「explain to 人 〜（人に説明する）」も同じく to が必要な要注意自動詞。","pitfall":"「explain me（×）」→「explain to me（○）」もセットで狙われる！"}}]},{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"共通テスト・重要語法＆頻出動詞ゲート","stage_id":"C-4","stage_title":"時空パトロール関所：仮定法＆助動詞の過去","target_level":"大学受験・共通テスト","inspector":{"id":"patrol_chronos","name":"クロノス隊員","role":"時空・時制警察","opening_line":"ピピーッ！時制がズレた嘘は許さないぞ！『あの時〜だったら、今〜なのに』とか『〜だったに違いない』を完璧に操って突破してみろ！"},"missions":[{"mission_id":"C4_M01","topic_tag":"混合仮定法（If S had p.p., S would 原形 now）","weakness_category":"customs_mixed_subjunctive","input_mode":"lie_choice","situation":"『もし昨日宝くじに当たっていたら、今ごろ自家用ジェットで飛んでいたのに（だから今は普通のエコノミークラスに乗るしかないんです）！』","target_lie_goal":"過去（昨日）の仮定と現在（今）の帰結を正しく組み合わせる","inspector_question":"なんでVIPラウンジじゃなくて普通のゲートに並んでるんだ？","choices":[{"id":"A","label":"If I had won the lottery yesterday, I would be flying in my private jet now!"},{"id":"B","label":"If I won the lottery yesterday, I would have flown in my private jet now!"}],"correct_answer":{"canonical_english":"If I had won the lottery yesterday, I would be flying in my private jet now!","acceptable_keywords":["had won","would be"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C4_01A","trigger":["B"],"misuse_meaning":"昨日と今の時制が完全に逆転して時空が崩壊する","comedy_tsukkomi":"時空がバグってるぞ！『yesterday（過去）』の仮定は `had p.p.`、『now（現在）』の結果は `would 原形/be -ing` だ！タイムマシン免許剥奪だぞ！"}],"pass_reaction":{"inspector_line":"見事な混合仮定法だ！昨日の妄想と今の現実の接続が完璧すぎる、通ってよし！","stamp_text":"PASS! 時空適合","bounty_points":30},"exam_note":{"headline":"混合仮定法：If S had p.p.（過去の反実仮想）, S would 原形 now（現在の反実仮想）","rule":"文末の now / today に気づけるかどうかが勝負。","pitfall":"機械的に「had p.p. の後ろは全部 would have p.p.」と暗記しないこと！"}},{"mission_id":"C4_M02","topic_tag":"cannot have p.p.（〜だったはずがない）","weakness_category":"customs_cannot_have","input_mode":"lie_compose","situation":"監視カメラに自分が映っているのに白を切れ！『昨日の夜、私がそこにいたはずがありません！（ドッペルゲンガーです！）』","target_lie_goal":"過去の強い否定推量「〜だったはずがない（cannot have been）」を使う","inspector_question":"防犯カメラに君が映っているぞ！どういうことだ！？","choices":[],"correct_answer":{"canonical_english":"I cannot have been there last night!","acceptable_keywords":["cannot have","can't have","couldn't have"]},"trap_comedies":[{"trap_id":"T_C4_02A","trigger":["must not have","mustn't have"],"misuse_meaning":"「〜してはいけなかった」あるいは不自然な否定になる","comedy_tsukkomi":"ブブー！『〜だったはずがない』という過去の否定推量は `must not have` じゃなくて `cannot (couldn't) have p.p.` だぞ！ドッペルゲンガーも苦笑いしてるわ！"}],"pass_reaction":{"inspector_line":"完璧な `cannot have been` だ！そこまで堂々と言い切るなら本当に双子かドッペルゲンガーかもしれんな、通れ！","stamp_text":"PASS! アリバイ成立","bounty_points":25},"exam_note":{"headline":"過去の推量：must have p.p.（〜だったに違いない）の否定は「cannot have p.p.」","rule":"「〜したはずがない」は cannot / couldn't have + 過去分詞。","pitfall":"must not have p.p. を「〜だったはずがない」として選ばせるのが定番の罠！"}},{"mission_id":"C4_M03","topic_tag":"without + 名詞（もし〜がなかったら）","weakness_category":"customs_without_subjunctive","input_mode":"lie_choice","situation":"大量のぬいぐるみを持っている言い訳：『このぬいぐるみたちがなかったら、私は怖くて飛行機に乗れないんです！』","target_lie_goal":"If it were not for 〜 / Without 〜（もし〜がなかったら）を使う","inspector_question":"なんで大人なのにぬいぐるみを10個も抱えてるんだ！？","choices":[{"id":"A","label":"Without these stuffed animals, I couldn't get on the plane!"},{"id":"B","label":"Without these stuffed animals, I can't get on the plane!"}],"correct_answer":{"canonical_english":"Without these stuffed animals, I couldn't get on the plane!","acceptable_keywords":["couldn't"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C4_03A","trigger":["B"],"misuse_meaning":"仮定法（もしなければ）なのに助動詞が現在形になっている","comedy_tsukkomi":"待て！今手元にぬいぐるみがあるのに『もしなかったら（仮定）』を語るなら、後ろは `would / could`（仮定法）にしろ！"}],"pass_reaction":{"inspector_line":"美しい仮定法 `Without 〜, I couldn't 〜` だ！お守り代わりなら仕方ない、10個とも通ってよし！","stamp_text":"PASS! ぬいぐるみ許可","bounty_points":20},"exam_note":{"headline":"Without A（＝But for A / If it were not for A）→ 後ろは「would / could + 原形」","rule":"過去の話「もしあの時Aがなかったら」なら、If it had not been for A, 〜 would have p.p.。","pitfall":"If を省略した倒置「Were it not for A / Had it not been for A」も頻出！"}},{"mission_id":"C4_M04","topic_tag":"should have p.p.（〜すべきだったのに）","weakness_category":"customs_should_have","input_mode":"lie_choice","situation":"冬なのに半袖半ズボンで空港に来た言い訳：『家を出る前にもっと厚着をすべきだったのに（忘れてきちゃったんです）！』","target_lie_goal":"過去の後悔「〜すべきだったのに（should have p.p.）」を使う","inspector_question":"雪国に行くのにその格好はなんだ！？凍死するぞ！","choices":[{"id":"A","label":"I should have worn a warm coat before leaving home!"},{"id":"B","label":"I should wear a warm coat before leaving home!"}],"correct_answer":{"canonical_english":"I should have worn a warm coat before leaving home!","acceptable_keywords":["should have worn"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C4_04A","trigger":["B"],"misuse_meaning":"過去の後悔なのに現在形の should を使っている","comedy_tsukkomi":"タイムパトロール出動だ！『家を出る前』って過去の話だろ！過去の後悔『〜すべきだったのに』は `should have + 過去分詞` だ！"}],"pass_reaction":{"inspector_line":"完璧な `should have worn` だ！反省しているなら空港でカイロを買っていきな、通ってよし！","stamp_text":"PASS! 過去反省完了","bounty_points":25},"exam_note":{"headline":"should have p.p. ＝「〜すべきだったのに（しなかった）」","rule":"ought to have p.p. も同じ意味。否定は shouldn't have p.p.（〜すべきではなかったのに）。","pitfall":"「〜したに違いない（must have p.p.）」との意味の取り違えに注意！"}}]}]},{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"難関大・紛らわしい英単語＆多義語コロシアム","stages":[{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"難関大・紛らわしい英単語＆多義語コロシアム","stage_id":"C-5","stage_title":"クイズ好き検疫官：1文字違いの英単語トラップ","target_level":"大学受験・難関大","inspector":{"id":"inspector_quiz","name":"スペル検疫官・ミスターQ","role":"1文字違い絶対見逃さないマン","opening_line":"フフフ…難関大はスペル1文字違いの単語で受験生を引っ掛けるのが大好きなのさ！変な単語で自爆しないように気をつけな！"},"missions":[{"mission_id":"C5_M01","topic_tag":"adopt（採用・養子）vs adapt（適応）","weakness_category":"customs_adopt_adapt","input_mode":"lie_choice","situation":"変な形のサングラスをかけている言い訳：『私はこの国の強い日差しに目を適応させたんです（実は寝不足を隠してるだけ）！』","target_lie_goal":"「〜に適応させる」の adapt を使う（adopt と間違えない）","inspector_question":"なんで室内なのに真っ黒なサングラスかけてるの？","choices":[{"id":"A","label":"I am adapting my eyes to the bright sunlight!"},{"id":"B","label":"I am adopting my eyes to the bright sunlight!"}],"correct_answer":{"canonical_english":"I am adapting my eyes to the bright sunlight!","acceptable_keywords":["adapt"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C5_01A","trigger":["B"],"misuse_meaning":"「私は自分の両目を養子に迎えています！」になる","comedy_tsukkomi":"ギャハハ！『adopt』は『採用する・養子にする』だぞ！『俺の目玉を養子縁組しました！』ってホラー映画かよｗ 適応は `adapt`（a が適応の a）だ！"}],"pass_reaction":{"inspector_line":"おおっ！`adapt A to B` を完璧に選んだな！日差し対策なら室内でも問題なし、通ってよし！","stamp_text":"PASS! 適応完了","bounty_points":25},"exam_note":{"headline":"adapt（適応する：apt＝ぴったり合う）vs adopt（採用する・養子にする：opt＝選ぶ）","rule":"語源で覚えると一発：adapt の apt は「適切な」、adopt の opt は「選ぶ（option）」。","pitfall":"長文中の語彙問題や空欄補充で毎年のように並べて出題される！"}},{"mission_id":"C5_M02","topic_tag":"considerate（思いやりのある）vs considerable（かなりの）","weakness_category":"customs_considerate","input_mode":"lie_choice","situation":"重い荷物を20個も持ち込む言い訳：『私はみんなにお土産を配る「とても思いやりのある人間」なんです！』","target_lie_goal":"「思いやりのある」の considerate を正しく選ぶ","inspector_question":"ちょっと！スーツケースが5個もあるじゃないか、業者か！？","choices":[{"id":"A","label":"No, I'm just a very considerate person!"},{"id":"B","label":"No, I'm just a very considerable person!"}],"correct_answer":{"canonical_english":"No, I'm just a very considerate person!","acceptable_keywords":["considerate"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C5_02A","trigger":["B"],"misuse_meaning":"「私はかなり大きな（大物の）人間なんです！」と謎の自画自賛","comedy_tsukkomi":"ぷっ！『considerable person』だと『俺ってかなりの大物・かなりのデカさなんだぜ！』って自分で言ってる変なヤツになるぞｗ 思いやりは `considerate` だ！"}],"pass_reaction":{"inspector_line":"見事！`considerate`（思いやりがある）を見抜いたな！優しいお土産なら通ってよし！","stamp_text":"PASS! 優しさ認定","bounty_points":25},"exam_note":{"headline":"considerate（思いやりのある）vs considerable（かなりの・相当な）","rule":"同様に economic（経済の）vs economical（節約になる・経済的な）も重要ペア。","pitfall":"後ろが -ate か -able かで意味が全く変わる形容詞に注意！"}},{"mission_id":"C5_M03","topic_tag":"compliment（褒め言葉）vs complement（補完するもの）","weakness_category":"customs_compliment","input_mode":"lie_choice","situation":"派手な金色のネクタイと紫のスーツを着ている言い訳：『このネクタイは、私のスーツを完璧に引き立てて補う（調和する）ものなんです！』","target_lie_goal":"「補う・引き立て合う」の complement を使う","inspector_question":"そのド派手な色の組み合わせは何なんだ…目がチカチカするぞ！","choices":[{"id":"A","label":"This tie is a perfect complement to my suit!"},{"id":"B","label":"This tie is a perfect compliment to my suit!"}],"correct_answer":{"canonical_english":"This tie is a perfect complement to my suit!","acceptable_keywords":["complement"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C5_03A","trigger":["B"],"misuse_meaning":"「このネクタイは私のスーツへの最高の褒め言葉です！」になる","comedy_tsukkomi":"ネクタイがスーツを『お前イケてるな！』って褒め言葉喋ってるのかよｗ `comple（complete＝完全にする）` の e が「補完」で、i が「褒め言葉」だ！"}],"pass_reaction":{"inspector_line":"すごいな、`complement` と `compliment` の1文字違いを見抜いたか！ファッションセンスはともかく通ってよし！","stamp_text":"PASS! 補完スーツ認定","bounty_points":30},"exam_note":{"headline":"complement（補う：completeと同じ e）vs compliment（褒め言葉・賛辞：i）","rule":"complimentary は「無料の・賛辞の」という意味も大学入試で出る。","pitfall":"音が全く同じ同音異義語なのでリスニング・長文とも要注意！"}},{"mission_id":"C5_M04","topic_tag":"affect（影響を与える：動詞）vs effect（影響・効果：名詞）","weakness_category":"customs_affect_effect","input_mode":"lie_choice","situation":"変な顔をしている言い訳：『長時間のフライトが私の顔に悪い影響を与えたんです（本当は変顔してるだけ）！』","target_lie_goal":"動詞の位置に affect を正しく置く","inspector_question":"さっきからなんでずっとそんな変な顔してるんだ！？","choices":[{"id":"A","label":"The long flight affected my face badly!"},{"id":"B","label":"The long flight effected my face badly!"}],"correct_answer":{"canonical_english":"The long flight affected my face badly!","acceptable_keywords":["affected"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C5_04A","trigger":["B"],"misuse_meaning":"「フライトが私の顔を生み出した・もたらした！」になる","comedy_tsukkomi":"おいｗ `effect` は主に名詞で「効果・影響」、動詞で使うと『引き起こす・実現する』になるぞ！影響を与える（動詞）は `affect`（a＝Actionのa）だ！"}],"pass_reaction":{"inspector_line":"よし、`affected` を動詞として正確に使ったな！フライト疲れなら仕方ない、通ってよし！","stamp_text":"PASS! 変顔免除","bounty_points":25},"exam_note":{"headline":"affect（動詞：〜に影響を与える）＝ have an effect（名詞）on 〜","rule":"affect は他動詞なので直後に on を置かない（× affect on → ○ affect 〜）。","pitfall":"「influence（動詞・名詞どちらもある）」とも比較して覚えよう！"}},{"mission_id":"C5_M05","topic_tag":"economic（経済の）vs economical（経済的な・節約になる）","weakness_category":"customs_economic","input_mode":"lie_choice","situation":"ボロボロの靴下を履いている言い訳：『私はとても経済的な（節約上手な）人間なんです！』","target_lie_goal":"「節約になる・経済的な」の economical を使う","inspector_question":"その穴の空いた靴下はどうしたんだ！？","choices":[{"id":"A","label":"I am living a very economical life!"},{"id":"B","label":"I am living a very economic life!"}],"correct_answer":{"canonical_english":"I am living a very economical life!","acceptable_keywords":["economical"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C5_05A","trigger":["B"],"misuse_meaning":"「私はとても景気・経済学的な生活をしている！」になる","comedy_tsukkomi":"ぷっ！`economic` は「経済学の・経済政策の（economic growth）」だ！節約・お得という意味なら `economical` だぞ！"}],"pass_reaction":{"inspector_line":"見事！`economical` を見抜いたな！その節約精神に感服した、通ってよし！","stamp_text":"PASS! 節約マスター","bounty_points":25},"exam_note":{"headline":"economic（経済の・経済学の） vs economical（節約になる・安上がりの）","rule":"同様に historic（歴史上有名な）vs historical（歴史の・歴史学の）も超頻出ペア！","pitfall":"-ic と -ical の違いは難関大の語彙問題でよく狙われる！"}}]},{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"難関大・紛らわしい英単語＆多義語コロシアム","stage_id":"C-6","stage_title":"ベテラン税関長ゲート：多義語＆重要イディオム","target_level":"大学受験・難関大","inspector":{"id":"chief_customs","name":"伝説の税関長・ゴードン","role":"多義語の達人","opening_line":"よく来たな若いの。単語を『1単語＝1意味』でしか覚えてないヤツは、このゲートで全員引っかかるぞ。多義語を操って俺を騙してみろ！"},"missions":[{"mission_id":"C6_M01","topic_tag":"appreciate（感謝する・真価を認める）の語法","weakness_category":"customs_appreciate","input_mode":"lie_choice","situation":"税関長にゴマをする嘘：『あなたの素晴らしい仕事ぶりに心から感謝しています！（だから見逃して！）』","target_lie_goal":"appreciate の正しい目的語（人ではなく「事・物」）を選ぶ","inspector_question":"お前、俺に何か言いたいことがあるなら言ってみろ。","choices":[{"id":"A","label":"I really appreciate your wonderful work!"},{"id":"B","label":"I really appreciate you for your wonderful work!"}],"correct_answer":{"canonical_english":"I really appreciate your wonderful work!","acceptable_keywords":["appreciate your"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C6_01A","trigger":["B"],"misuse_meaning":"appreciate の直後に「人（you）」を置いてしまう誤用","comedy_tsukkomi":"ダウト！`thank you for 〜` は人を目的語にできるが、`appreciate` は「人」を直後に置けねえんだ！『あなたの仕事（モノ・コト）』を感謝しろ！"}],"pass_reaction":{"inspector_line":"おお、よく知ってるな！`appreciate` の後ろに人を持ってこないとは…そこまで褒められたら通すしかないな！","stamp_text":"PASS! ゴマすり成功","bounty_points":25},"exam_note":{"headline":"appreciate は「モノ・コト」が目的語（× appreciate you → ○ thank you）","rule":"I would appreciate it if you could 〜（〜していただければ幸いです）も超頻出表現。","pitfall":"「真価を認める・鑑賞する・感謝する」の3つの意味を押さえよう！"}},{"mission_id":"C6_M02","topic_tag":"account for（説明する・割合を占める）","weakness_category":"customs_account_for","input_mode":"lie_compose","situation":"荷物の中身の90%がマンガ本な言い訳：『このマンガは私の人生の90%を占めている（説明できる）んです！』","target_lie_goal":"account for を使って「90%を占める」と言い切る","inspector_question":"おい、スーツケースのほとんどがマンガじゃないか！どういうことだ！？","choices":[],"correct_answer":{"canonical_english":"Manga accounts for 90% of my life!","acceptable_keywords":["account for","accounts for"]},"trap_comedies":[{"trap_id":"T_C6_02A","trigger":["count","explain"],"misuse_meaning":"account for の熟語を使えていない、または前置詞抜け","comedy_tsukkomi":"惜しい！『〜を説明する・〜の割合を占める』っていう1粒で2度美味しい熟語は `a〇〇〇t for` だぞ！銀行口座（account）じゃない方だ！"}],"pass_reaction":{"inspector_line":"見事な `accounts for` だ！人生の9割がマンガなら持っていかないと生きられんな、通ってよし！","stamp_text":"PASS! マンガ魂承認","bounty_points":25},"exam_note":{"headline":"account for ＝ ①（理由を）説明する ②（割合を）占める","rule":"共通テストの図表・グラフ問題でも「〜 accounts for 30% of the total」が頻出。","pitfall":"take 〜 into account（〜を考慮に入れる）も同系統の最重要イディオム！"}},{"mission_id":"C6_M03","topic_tag":"put off（延期する）vs call off（中止する）","weakness_category":"customs_put_call_off","input_mode":"lie_choice","situation":"飛行機に乗り遅れた言い訳：『今日のテストが来週に「延期された」から、急ぐ必要がなくなったんです（本当は寝坊）！』","target_lie_goal":"「延期する」の put off（＝postpone）を選ぶ","inspector_question":"なんで予定の便に乗らなかったんだ？","choices":[{"id":"A","label":"My exam was put off until next week!"},{"id":"B","label":"My exam was called off until next week!"}],"correct_answer":{"canonical_english":"My exam was put off until next week!","acceptable_keywords":["put off"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C6_03A","trigger":["B"],"misuse_meaning":"「来週までテストが完全中止（キャンセル）になった」という矛盾","comedy_tsukkomi":"待てｗ `call off` は『完全中止（cancel）』だ！中止になったのに『来週まで（until next week）』はおかしいだろ！延期は `put off` だ！"}],"pass_reaction":{"inspector_line":"完璧な `put off`（延期）だな！来週まで時間があるなら次の便でゆっくり行け、通ってよし！","stamp_text":"PASS! 延期認定","bounty_points":25},"exam_note":{"headline":"put off ＝ postpone（延期する） / call off ＝ cancel（中止する）","rule":"put off は後ろに動名詞 -ing もとれる（put off doing＝〜するのを先延ばしにする）。","pitfall":"どちらも「off」が付いているので試験本番で逆にしやすい超要注意ペア！"}},{"mission_id":"C6_M04","topic_tag":"turn out to be 〜（〜だと判明する）","weakness_category":"customs_turn_out","input_mode":"lie_compose","situation":"カバンから出てきた謎の白い粉（実は塩）：『最初は砂糖だと思ったのですが、実は塩だと判明したんです！』","target_lie_goal":"turn out (to be) を使って「〜だと判明した」と言う","inspector_question":"こら！この白い粉はなんだ！？正直に言え！","choices":[],"correct_answer":{"canonical_english":"It turned out to be salt!","acceptable_keywords":["turned out","turn out"]},"trap_comedies":[{"trap_id":"T_C6_04A","trigger":["turned on","turned off","turned up"],"misuse_meaning":"電気をつけたり現れたりする意味になってしまう","comedy_tsukkomi":"おい！`turn on` じゃスイッチオンになるぞ！『結局〜だとわかる・判明する』は `turn 〇〇〇 (to be)` だ！"}],"pass_reaction":{"inspector_line":"おお、`turned out to be salt` か！試しに舐めてみたら本当にしょっぱかったわ、通ってよし！","stamp_text":"PASS! 塩証明","bounty_points":25},"exam_note":{"headline":"turn out (to be) 〜 ＝「結局〜だとわかる・判明する」（＝prove to be）","rule":"It turned out that S V の形でも超頻出。","pitfall":"turn up（現れる・音量を上げる）、turn down（断る・音量を下げる）も一緒に整理！"}}]}]},{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"自由英作文・嘘つきスピーチ最終試験","stages":[{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"自由英作文・嘘つきスピーチ最終試験","stage_id":"C-7","stage_title":"VIPゲート：倒置・関係副詞・接続詞の精密トリック","target_level":"大学受験・難関大","inspector":{"id":"inspector_vip","name":"VIPゲート審査官・エレナ","role":"ファーストクラス専用審査官","opening_line":"ここはVIP専用ゲートよ。高度な構文をミスなく操れる知的な嘘つきしか通さないわ。さあ、私を唸らせてみなさい。"},"missions":[{"mission_id":"C7_M01","topic_tag":"否定語の文頭倒置（Never have I...）","weakness_category":"customs_inversion","input_mode":"lie_choice","situation":"スーツケースから謎の金塊（実はチョコ）が出たときの芝居：『こんなに美しい金色のチョコレートは生まれて初めて見ました！（誰かが勝手に入れたんだ！）』","target_lie_goal":"Never を文頭に出して正しい倒置語順にする","inspector_question":"まあ！カバンの中から金の延べ棒みたいなものが出たわよ？","choices":[{"id":"A","label":"Never have I seen such a golden chocolate!"},{"id":"B","label":"Never I have seen such a golden chocolate!"}],"correct_answer":{"canonical_english":"Never have I seen such a golden chocolate!","acceptable_keywords":["Never have I"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C7_01A","trigger":["B"],"misuse_meaning":"否定語が文頭に出たのに倒置を忘れている","comedy_tsukkomi":"ブッブー！`Never` を文頭にカッコよく出したのに `I have` のままじゃ台無しよ！疑問文の語順 `Never have I seen` にひっくり返しなさい！"}],"pass_reaction":{"inspector_line":"まあ見事な倒置構文！そこまで完璧な英語で驚かれたら、誰かのイタズラと信じるしかないわね。通ってよし！","stamp_text":"PASS! VIP倒置突破","bounty_points":30},"exam_note":{"headline":"文頭の否定語（Never / Little / Seldom / Not only）→ 後ろは疑問文の語順（倒置）","rule":"助動詞・be動詞がなければ do / does / did を前に出す（Never did I dream 〜）。","pitfall":"強調したいあまり倒置を忘れて S+V にしてしまうのが英作文・整序の定番ミス！"}},{"mission_id":"C7_M02","topic_tag":"despite（前置詞）vs although（接続詞）","weakness_category":"customs_despite_although","input_mode":"lie_choice","situation":"『大雨が降っていたにもかかわらず、私は傘も差さずに乾いているんです（撥水コートの実験中）！』","target_lie_goal":"despite＋名詞句 / although＋S+V の品詞ルールを守る","inspector_question":"外は土砂降りなのに、どうしてあなたは全く濡れていないの？","choices":[{"id":"A","label":"Despite the heavy rain, I am completely dry!"},{"id":"B","label":"Despite it was raining heavily, I am completely dry!"}],"correct_answer":{"canonical_english":"Despite the heavy rain, I am completely dry!","acceptable_keywords":["Despite the heavy rain"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C7_02A","trigger":["B"],"misuse_meaning":"前置詞 despite の後ろに文（S+V）を置いてしまう品詞エラー","comedy_tsukkomi":"ダウト！`despite`（＝in spite of）は前置詞だから後ろに置けるのは「名詞」だけ！`it was raining` みたいに文を置きたいなら `although / though` を使いなさい！"}],"pass_reaction":{"inspector_line":"品詞の使い分けが完璧だわ！特殊撥水コートのモニターなら納得ね、通ってよし！","stamp_text":"PASS! 撥水実験承認","bounty_points":25},"exam_note":{"headline":"前置詞（＋名詞）：despite / in spite of / during / because of","rule":"接続詞（＋S+V）：although / though / while / because。同じ意味でも後ろの形が違う！","pitfall":"「despite of」と of を付けてしまうのも受験生に多いミス（in spite of と混同しない）。"}},{"mission_id":"C7_M03","topic_tag":"関係代名詞 which vs 関係副詞 where","weakness_category":"customs_which_where","input_mode":"lie_choice","situation":"パスポートの出身地欄を指して：『これが私が去年訪れた（架空の）秘密の島です！』","target_lie_goal":"visited の後ろが欠けている（不完全文）ことを見抜いて which を使う","inspector_question":"この地図に載っていない島は何なの？説明して！","choices":[{"id":"A","label":"This is the secret island which I visited last year!"},{"id":"B","label":"This is the secret island where I visited last year!"}],"correct_answer":{"canonical_english":"This is the secret island which I visited last year!","acceptable_keywords":["which I visited"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C7_03A","trigger":["B"],"misuse_meaning":"「場所だから where」と反射的に選んでしまうミス","comedy_tsukkomi":"引っかかったわね！`visit` は他動詞だから後ろの「〜を訪れた（目的語）」が欠けてる（不完全文）の！だから場所でも `which`（または that）が正解よ！"}],"pass_reaction":{"inspector_line":"見事だわ！前の『island』に騙されず後ろの欠けを見抜いたわね。その知性なら秘密の島も実在するかも…通ってよし！","stamp_text":"PASS! 秘密の島認定","bounty_points":30},"exam_note":{"headline":"関係詞の鉄則：「前の名詞（場所・時間）」ではなく「後ろの文の完全/不完全」で判定","rule":"visited（他動詞・目的語欠け）→ which / stayed（自動詞・完全文）→ where。","pitfall":"共通テスト・難関大ともに毎年のように出る最重要トラップ！"}},{"mission_id":"C7_M04","topic_tag":"付帯状況の with（with his arms folded）","weakness_category":"customs_with_participle","input_mode":"lie_choice","situation":"目が閉じたまま歩いている言い訳：『私は目を閉じたままでも（レーダーで）歩ける特殊能力者なんです！』","target_lie_goal":"「目を閉じたまま」を with my eyes closed で正しく表現する","inspector_question":"ちょっと！なんで目を閉じたまま歩いてるの！？危ないでしょ！","choices":[{"id":"A","label":"I can walk with my eyes closed!"},{"id":"B","label":"I can walk with my eyes closing!"}],"correct_answer":{"canonical_english":"I can walk with my eyes closed!","acceptable_keywords":["with my eyes closed"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C7_04A","trigger":["B"],"misuse_meaning":"目が勝手に自分自身を閉じていくようなホラー表現になる","comedy_tsukkomi":"ダウト！目は自分によって『閉じられる側（受動）』だから過去分詞の `closed` よ！`with his arms folded（腕を組んで）` も同じね！"}],"pass_reaction":{"inspector_line":"完璧な `with my eyes closed` だわ！本当に壁にぶつからないなら特殊能力ね、通ってよし！","stamp_text":"PASS! 閉眼能力認定","bounty_points":25},"exam_note":{"headline":"付帯状況「with ＋ O ＋ 分詞」：Oがする側→ -ing / Oがされる側→ 過去分詞","rule":"with my eyes closed（目を閉じて）、with her arms folded（腕を組んで）、with the dog following him（犬を後ろに従えて）。","pitfall":"目の動きや腕の動作は「閉じられる・組まれる」なので必ず過去分詞！"}}]},{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"自由英作文・嘘つきスピーチ最終試験","stage_id":"C-8","stage_title":"最終関門：AI税関総司令官を騙す和文和訳＆自由英作文","target_level":"大学受験・難関大","inspector":{"id":"commander_ai","name":"AI税関総司令官・オメガ","role":"最終関門のボス","opening_line":"私が最後の壁だ。難しい日本語の嘘を、減点されないシンプルな英語に言い換えて（和文和訳）私を完全に言いくるめてみせよ！"},"missions":[{"mission_id":"C8_M01","topic_tag":"和文和訳（難しい日本語を平易な英語へ）","weakness_category":"customs_wafuku_1","input_mode":"lie_compose","situation":"スマホを3台持ち込む言い訳：『私はスマートフォンに依存しているのではなく、これらがないと生きていけないだけなんです（健康維持装置です）！』","target_lie_goal":"「〜なしでは生きられない（cannot live without）」でシンプルに言い切る","inspector_question":"なぜスマホを3台も持っている！？転売目的か！？","choices":[],"correct_answer":{"canonical_english":"I cannot live without these smartphones!","acceptable_keywords":["cannot live without","can't live without","depend on"]},"trap_comedies":[{"trap_id":"T_C8_01A","trigger":["boss","need no","without live"],"misuse_meaning":"語順エラーや直訳破綻","comedy_tsukkomi":"エラー！日本語を直訳しようとして語順が壊れてるぞ！『〜なしで生きることはできない』＝ `cannot live without 〜` なら中学生レベルの単語で100%伝わるだろ！"}],"pass_reaction":{"inspector_line":"なるほど `cannot live without these smartphones` か！シンプルかつ文法ミスゼロで説得力がある！通ってよし！","stamp_text":"PASS! 必需品認定","bounty_points":35},"exam_note":{"headline":"英作文の極意「和文和訳」：書けない日本語は中学レベルの言い回しに落とす","rule":"「依存している」→「〜なしで暮らせない（cannot live without）」「使いすぎている（use 〜 too much）」。","pitfall":"難単語のスペルミスで減点されるより、確実な単語で正確に書く方が合格点に繋がる！"}},{"mission_id":"C8_M02","topic_tag":"無生物主語での言い訳（prevent O from -ing）","weakness_category":"customs_inanimate_lie","input_mode":"lie_choice","situation":"荷物検査の列に割り込んだ言い訳：『強い風が私を前に押し出したせいで、列に並ぶことができなかったんです！』","target_lie_goal":"無生物主語（The strong wind prevented me from 〜）を完璧に使う","inspector_question":"おい！今、列に割り込んだだろ！？どういうつもりだ！","choices":[{"id":"A","label":"The strong wind prevented me from waiting in line!"},{"id":"B","label":"The strong wind prevented me to wait in line!"}],"correct_answer":{"canonical_english":"The strong wind prevented me from waiting in line!","acceptable_keywords":["prevented me from"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C8_02A","trigger":["B"],"misuse_meaning":"prevent O to do という存在しない語法ミス","comedy_tsukkomi":"ダウト！`prevent / keep / stop` は『Oが〜するのを妨げる』だから後ろは `to` じゃなくて `from -ing` だ！風も『そっちの語法じゃないだろ』ってツッコんでるぞ！"}],"pass_reaction":{"inspector_line":"お見事な無生物主語 `prevented me from waiting` だ！風のせいなら仕方ない、VIPレーンへ通ってよし！","stamp_text":"PASS! 強風免罪","bounty_points":35},"exam_note":{"headline":"prevent / stop / keep ＋ O ＋ from -ing ＝「Oが〜するのを妨げる（Oのせいで〜できない）」","rule":"和訳でも英作文でも使える無生物主語の最強テンプレート。","pitfall":"「allow / enable O to do（Oが〜できるようにする）」の to 不定詞と混ぜないこと！"}},{"mission_id":"C8_M03","topic_tag":"最終嘘つきスピーチ（比較＋接続詞＋仮定法）","weakness_category":"customs_final_boss","input_mode":"lie_compose","situation":"最終突破テスト！『私は普通の旅行者ではなく、世界を救う秘密エージェントなんです！（英語で no more than / not 〜 but を使ってかっこよく言い切れ！）』","target_lie_goal":"「〜ではなく〜だ（not A but B）」を使って説得力のある嘘を完成させる","inspector_question":"最後にお前の正体を英語でハッキリ言ってみろ！本当は何者だ！？","choices":[],"correct_answer":{"canonical_english":"I am not a normal traveler but a secret agent!","acceptable_keywords":["not","but","agent","save","traveler"]},"trap_comedies":[{"trap_id":"T_C8_03A","trigger":["and","only traveler"],"misuse_meaning":"「普通の旅行者です」と認めてしまう、または not A but B が使えていない","comedy_tsukkomi":"おい！せっかくのクライマックスで『ただの旅行者です』って白状してどうする！`I am NOT a normal traveler, BUT a secret agent!` で決めろ！"}],"pass_reaction":{"inspector_line":"クッ…なんて堂々とした `not A but B` だ！文法・語法・語彙すべてに一点の曇りもない…！お前こそ『伝説の英語マスター』だ、全ゲート突破おめでとう！！","stamp_text":"ALL CLEAR! 伝説のパスポート","bounty_points":100},"exam_note":{"headline":"not A but B（AではなくB）＆ 英語表現の総仕上げ","rule":"動詞や名詞を対比させるときは A と B の品詞・形を揃える（並列構造）。","pitfall":"主語が A と B なら「not A but B ＋ 動詞」のとき動詞は B に一致させる！"}},{"mission_id":"C8_M04","topic_tag":"クジラ構文（no more A than B）","weakness_category":"customs_whale_syntax","input_mode":"lie_choice","situation":"『クジラが魚でないのと同様に、私は怪しい密輸犯ではありません！』と究極の比喩で煙に巻け！","target_lie_goal":"no more A than B（Bでないのと同様Aではない）を正しく選ぶ","inspector_question":"お前、やっぱり怪しい密輸犯なんじゃないか！？","choices":[{"id":"A","label":"I am no more a smuggler than a whale is a fish!"},{"id":"B","label":"I am no less a smuggler than a whale is a fish!"}],"correct_answer":{"canonical_english":"I am no more a smuggler than a whale is a fish!","acceptable_keywords":["no more"],"choice_id":"A"},"trap_comedies":[{"trap_id":"T_C8_04A","trigger":["B"],"misuse_meaning":"「クジラが魚であるのと同様に、私は密輸犯だ！」という謎の自白","comedy_tsukkomi":"待てｗ `no less A than B` にしたら『同じくらいガッツリ密輸犯です！』っていう肯定になっちまうぞ！否定は `no more 〜 than` だ！"}],"pass_reaction":{"inspector_line":"クジラ構文まで繰り出してくるとは…！完全な無罪（哺乳類）を証明されたな、通ってよし！","stamp_text":"PASS! クジラ構文突破","bounty_points":40},"exam_note":{"headline":"クジラ構文：「A is no more B than C is D」＝「CがDでないのと同様、AはBではない」","rule":"no more ＝「どちらもゼロ（同じように〜ない）」。逆に no less 〜 than ＝「どちらも同じくらい〜だ（肯定）」。","pitfall":"「not more than（せいぜい）」と「no more 〜 than（クジラ構文）」の区別をつけよう！"}}]}]}];
+</script>
+<script>
+/* === LOGIC START === */
+const LiarLogic = (() => {
+// テキスト正規化：空白・句読点・記号を除去し小文字化する（姉妹アプリと同一方式）
+function normalizeText(s) {
+  if (s == null) return "";
+  let t = String(s);
+  t = t.replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  t = t.replace(/[\s　、。，．・：；:;,.「」『』（）()［］<>＜＞!?！？〜~～…‥"”'’`｜|/／\-ー―_]/g, "");
+  return t.toLowerCase();
+}
+
+// acceptable_keywords を「言い換えファミリー」にまとめる。
+// 一方が他方を内包するキーワード同士（例：apologize と apologize to）は同じファミリーとして1つに数える。
+function keywordFamilies(mission) {
+  const raw = [...new Set((mission.correct_answer?.acceptable_keywords || []).map(normalizeText).filter(Boolean))];
+  const families = [];
+  for (const kw of raw) {
+    let placed = false;
+    for (const fam of families) {
+      if (fam.some((m) => m.includes(kw) || kw.includes(m))) { fam.push(kw); placed = true; break; }
+    }
+    if (!placed) families.push([kw]);
+  }
+  return families;
+}
+// 入力が充足したファミリー数（ファミリー内のどれか1つが含まれれば充足）
+function familyHits(mission, normalizedInput) {
+  return keywordFamilies(mission).filter((fam) => fam.some((m) => normalizedInput.includes(m))).length;
+}
+// 自由入力の正解しきい値：模範解答（canonical_english）自身が充足するファミリー数を上限2・下限1として使う。
+// 言い換え候補が並ぶデータ（don't have to / needn't など）では模範解答は1ファミリーしか充足しないため、
+// 「模範解答が通る」ことがそのまま妥当なしきい値になる。複数ポイントを要する問（C8_M03など）では2になる。
+function freeNeed(mission) {
+  const canonHits = familyHits(mission, normalizeText(mission.correct_answer?.canonical_english || ""));
+  return Math.min(2, Math.max(1, canonHits));
+}
+// 判定に使うキーワード（正規化＋重複除去）
+function usableKeywords(mission) {
+  return [...new Set((mission.correct_answer?.acceptable_keywords || []).map(normalizeText).filter(Boolean))];
+}
+
+// 自由入力のトラップ照合（トラップ優先。ただし誤爆防止ガード2種つき・姉妹アプリと同一方式）
+// ガード1：trigger を内包する acceptable キーワードが入力に含まれていれば、その trigger は除外
+//         （例：C6_M02 の trigger「count」は正解キーワード「accounts for」に内包される）
+// ガード2：trigger と無関係な核心キーワードだけですでに正解しきい値（ファミリー数）に達している入力は、
+//         汎用的な trigger 語の混入で上書きしない（例：C8_M03 の trigger「and」）
+function matchTrapByText(mission, normalizedInput) {
+  const acceptN = usableKeywords(mission);
+  const need = freeNeed(mission);
+  for (const trap of mission.trap_comedies || []) {
+    for (const trig of trap.trigger || []) {
+      const tn = normalizeText(trig);
+      if (!tn) continue;
+      if (!normalizedInput.includes(tn)) continue;
+      if (acceptN.some((a) => a.includes(tn) && normalizedInput.includes(a))) continue;
+      const independentHits = keywordFamilies(mission)
+        .filter((fam) => !fam.some((m) => m.includes(tn)))
+        .filter((fam) => fam.some((m) => normalizedInput.includes(m))).length;
+      if (independentHits >= need) continue;
+      return trap;
+    }
+  }
+  return null;
+}
+
+function judgeFreeText(mission, input) {
+  const n = normalizeText(input);
+  if (!n) return { result: "fallback", trap: null, hits: 0 };
+  const trap = matchTrapByText(mission, n);
+  if (trap) return { result: "trap", trap, hits: 0 };
+  const hits = familyHits(mission, n);
+  if (hits >= freeNeed(mission)) return { result: "correct", trap: null, hits };
+  return { result: "fallback", trap: null, hits };
+}
+
+function findChoice(mission, choiceId) {
+  return (mission.choices || []).find((c) => c.id === choiceId) || null;
+}
+
+// 選択式のトラップ照合：trigger に選択肢IDが含まれていればそのトラップ
+function matchTrapByChoice(mission, choiceId) {
+  for (const trap of mission.trap_comedies || []) {
+    for (const trig of trap.trigger || []) {
+      if (trig === choiceId) return trap;
+    }
+  }
+  return null;
+}
+
+function judgeChoice(mission, choiceId) {
+  // トラップ照合を正解判定より優先する（指令書・姉妹アプリの方式）
+  const trap = matchTrapByChoice(mission, choiceId);
+  if (trap) return { result: "trap", trap };
+  if (mission.correct_answer && choiceId === mission.correct_answer.choice_id) {
+    return { result: "correct", trap: null };
+  }
+  return { result: "fallback", trap: null };
+}
+
+// レベル絞込：target_level の表記で振り分ける
+function matchesLevel(stage, filter) {
+  if (!filter || filter === "all") return true;
+  const lvl = stage.target_level || "";
+  if (filter === "junior") return lvl.includes("高校受験");
+  if (filter === "common") return lvl.includes("共通テスト");
+  if (filter === "exam") return lvl.includes("難関大") || lvl.includes("二次");
+  return true;
+}
+
+// 嘘つきランク（バウンティ合計 0〜925 に対して7段階）
+const BOUNTY_TITLES = [
+  { min: 925, title: "嘘の神（AIキラー）" },
+  { min: 700, title: "伝説の嘘つき" },
+  { min: 550, title: "国際ペテン師" },
+  { min: 400, title: "ゲートブレイカー" },
+  { min: 250, title: "言い訳上手" },
+  { min: 100, title: "嘘つき見習い" },
+  { min: 0, title: "素直な旅行者" },
+];
+function bountyTitle(total) {
+  for (const t of BOUNTY_TITLES) if (total >= t.min) return t.title;
+  return "素直な旅行者";
+}
+
+function totalBountyOf(chapters) {
+  let total = 0;
+  for (const c of chapters) for (const st of c.stages) for (const m of st.missions) {
+    total += m.pass_reaction?.bounty_points || 0;
+  }
+  return total;
+}
+function totalMissionsOf(chapters) {
+  return chapters.reduce((n, c) => n + c.stages.reduce((m, st) => m + st.missions.length, 0), 0);
+}
+function stageBounty(stage) {
+  return stage.missions.reduce((n, m) => n + (m.pass_reaction?.bounty_points || 0), 0);
+}
+// ステージ内で獲得済みのバウンティ（スタンプ獲得ミッション分のみ）
+function stageEarned(state, stage) {
+  let sum = 0;
+  for (const m of stage.missions) {
+    if (state.stamps[m.mission_id]) sum += m.pass_reaction?.bounty_points || 0;
+  }
+  return sum;
+}
+
+// 進捗への誤答記録：コンボをリセットし、リベンジ待ち（復習対象）へ入れる
+function applyWrong(state, missionId) {
+  state.combo = 0;
+  state.weak[missionId] = true;
+}
+// 突破成功：初回のみバウンティを加算。一発成功（そのセッションで誤答0）ならリベンジ待ちから外す
+function applyPass(state, mission, wrongAttempts) {
+  let pointsAdded = 0;
+  if (!state.stamps[mission.mission_id]) {
+    pointsAdded = mission.pass_reaction?.bounty_points || 0;
+    state.bounty += pointsAdded;
+  }
+  state.stamps[mission.mission_id] = true;
+  state.combo = (state.combo || 0) + 1;
+  if (state.combo > (state.bestCombo || 0)) state.bestCombo = state.combo;
+  let removedWeak = false;
+  if (wrongAttempts === 0 && state.weak[mission.mission_id]) {
+    delete state.weak[mission.mission_id];
+    removedWeak = true;
+  }
+  return { pointsAdded, removedWeak };
+}
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+return {
+  normalizeText, keywordFamilies, familyHits, freeNeed, usableKeywords,
+  matchTrapByText, judgeFreeText, findChoice, matchTrapByChoice, judgeChoice, matchesLevel,
+  BOUNTY_TITLES, bountyTitle, totalBountyOf, totalMissionsOf, stageBounty, stageEarned,
+  applyWrong, applyPass, escapeHtml,
+};
+})();
+/* === LOGIC END === */
+</script>
+<script>
+"use strict";
+const L = LiarLogic;
+const TOTAL_BOUNTY = L.totalBountyOf(CHAPTERS);
+const TOTAL_MISSIONS = L.totalMissionsOf(CHAPTERS);
+const M_INDEX = new Map(); // mission_id -> {chapter, stage, mission}
+for (const c of CHAPTERS) for (const st of c.stages) for (const m of st.missions) {
+  M_INDEX.set(m.mission_id, { chapter: c, stage: st, mission: m });
+}
+const LEVELS = [
+  { id: "all", label: "すべて" },
+  { id: "junior", label: "高校受験" },
+  { id: "common", label: "共通テスト" },
+  { id: "exam", label: "難関大" },
+];
+const CH_COLOR = { 1: "#2563eb", 2: "#0e7c7b", 3: "#7c3aed", 4: "#b91c1c" };
+
+const PROGRESS_KEY = "liar.progress.v1";
+const MUTED_KEY = "liar.muted.v1";
+let prog = { stamps: {}, weak: {}, bounty: 0, combo: 0, bestCombo: 0 };
+try {
+  const raw = localStorage.getItem(PROGRESS_KEY);
+  if (raw) prog = Object.assign(prog, JSON.parse(raw));
+} catch (e) {}
+function saveProgress() {
+  try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(prog)); } catch (e) {}
+}
+function stampCount() { return Object.keys(prog.stamps).length; }
+function weakCount() { return Object.keys(prog.weak).length; }
+
+/* ---------- 効果音（Web Audio・三角波・1.3kHz帯） ---------- */
+let actx = null;
+let muted = false;
+try { muted = localStorage.getItem(MUTED_KEY) === "1"; } catch (e) {}
+function tone(freq, delay, dur, vol) {
+  if (muted) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === "suspended") actx.resume();
+    const t0 = actx.currentTime + (delay || 0);
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = "triangle";
+    o.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol || 0.5, t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(t0); o.stop(t0 + dur + 0.05);
+  } catch (e) {}
+}
+const SFX = {
+  tap() { tone(1318, 0, 0.08, 0.35); },
+  boke() { tone(392, 0, 0.16, 0.4); tone(330, 0.1, 0.22, 0.4); },
+  stamp() { tone(523, 0, 0.07, 0.5); tone(262, 0.05, 0.14, 0.5); },
+  pass() { tone(1047, 0, 0.12, 0.5); tone(1318, 0.09, 0.12, 0.5); tone(1568, 0.18, 0.2, 0.5); },
+  fanfare() { tone(1047, 0, 0.12, 0.5); tone(1318, 0.1, 0.12, 0.5); tone(1568, 0.2, 0.12, 0.5); tone(2093, 0.3, 0.3, 0.5); },
+};
+function refreshSoundToggles() {
+  for (const id of ["sound-toggle-title", "sound-toggle-map", "sound-toggle-memo"]) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = muted ? "音：オフ" : "音：オン";
+  }
+}
+function toggleMute() {
+  muted = !muted;
+  try { localStorage.setItem(MUTED_KEY, muted ? "1" : "0"); } catch (e) {}
+  refreshSoundToggles();
+  if (!muted) SFX.tap();
+}
+
+/* ---------- 審査官の顔（SVG・審査官×表情） ---------- */
+const INSPECTOR_LOOK = {
+  teacher_oni:       { skin: "#f4a259", hair: "#23262d", style: "oni" },
+  customs_officer_k: { skin: "#ffd9b3", hair: "#5b3a1e", style: "bobcap" },
+  inspector_watson:  { skin: "#ffdcb8", hair: "#8a8d94", style: "watson" },
+  patrol_chronos:    { skin: "#ffd9b3", hair: "#2b5ea7", style: "goggles" },
+  inspector_quiz:    { skin: "#ffe3c2", hair: "#5b2a86", style: "swirl" },
+  chief_customs:     { skin: "#f2c094", hair: "#e8e6df", style: "chief" },
+  inspector_vip:     { skin: "#ffe0bd", hair: "#7a2e1d", style: "vip" },
+  commander_ai:      { skin: "#c7cedb", hair: "#3a4152", style: "robot" },
+};
+function renderInspector(inspectorId, emotion) {
+  const a = INSPECTOR_LOOK[inspectorId] || INSPECTOR_LOOK.customs_officer_k;
+  const ink = "#1f2430";
+  const robot = a.style === "robot";
+  let back = "", front = "", extra = "";
+  // 背景側（ロングヘア・ボブの後ろ側）
+  if (a.style === "bobcap") {
+    back = `<path d="M38 108 a62 66 0 0 1 124 0 l5 46 -24 0 -3 -38 a52 56 0 0 0 -80 0 l-3 38 -24 0 z" fill="${a.hair}"/>`;
+  } else if (a.style === "vip") {
+    back = `<path d="M36 106 a64 68 0 0 1 128 0 l8 66 -27 0 -4 -54 a52 56 0 0 0 -82 0 l-4 54 -27 0 z" fill="${a.hair}"/>`;
+  }
+  // 前側の髪
+  if (a.style === "oni") {
+    front = `<path d="M47 100 a53 55 0 0 1 106 0 l0 -14 a53 44 0 0 0 -106 0 z" fill="${a.hair}"/>`;
+    extra += `<path d="M56 44 q-6 -18 6 -26 q4 12 12 18 q-10 6 -18 8z" fill="#eec25e" stroke="${ink}" stroke-width="2.5"/>`;
+    extra += `<path d="M144 44 q6 -18 -6 -26 q-4 12 -12 18 q10 6 18 8z" fill="#eec25e" stroke="${ink}" stroke-width="2.5"/>`;
+  } else if (a.style === "bobcap") {
+    front = `<path d="M47 98 a53 55 0 0 1 106 0 l0 -10 a53 44 0 0 0 -106 0 z" fill="${a.hair}"/>`;
+    extra += `<path d="M40 74 a60 40 0 0 1 120 0 l0 6 -120 0 z" fill="#16324f"/><rect x="34" y="76" width="132" height="9" rx="4" fill="#16324f"/><circle cx="100" cy="52" r="9" fill="#eec25e" stroke="#8a6410" stroke-width="2"/>`;
+  } else if (a.style === "watson") {
+    front = `<path d="M47 98 a53 55 0 0 1 106 0 l0 -16 a53 42 0 0 0 -106 0 z" fill="${a.hair}"/><rect x="95" y="34" width="7" height="26" fill="${a.hair}"/>`;
+  } else if (a.style === "goggles") {
+    front = `<path d="M46 92 L54 54 L68 70 L80 44 L94 62 L106 40 L118 60 L134 46 L142 72 L154 62 L152 96 a54 50 0 0 0 -104 0 z" fill="${a.hair}"/>`;
+    extra += `<g stroke="${ink}" stroke-width="3.5" fill="rgba(140,200,240,.35)"><rect x="56" y="52" width="38" height="26" rx="10"/><rect x="106" y="52" width="38" height="26" rx="10"/></g><path d="M94 62 q6 -4 12 0" stroke="${ink}" stroke-width="3.5" fill="none"/>`;
+  } else if (a.style === "swirl") {
+    front = `<path d="M47 100 a53 55 0 0 1 106 0 l0 -12 a53 44 0 0 0 -106 0 z" fill="${a.hair}"/><path d="M84 44 a17 13 0 1 1 20 12 a11 8 0 1 0 -13 -9" fill="none" stroke="${a.hair}" stroke-width="9" stroke-linecap="round"/>`;
+  } else if (a.style === "chief") {
+    front = `<path d="M47 96 a53 55 0 0 1 106 0 l0 -14 a53 44 0 0 0 -106 0 z" fill="${a.hair}"/>`;
+    extra += `<path d="M38 70 a62 42 0 0 1 124 0 l0 8 -124 0 z" fill="#16324f"/><rect x="30" y="72" width="140" height="10" rx="5" fill="#16324f"/><rect x="82" y="52" width="36" height="13" rx="4" fill="#eec25e" stroke="#8a6410" stroke-width="2"/>`;
+  } else if (a.style === "vip") {
+    front = `<path d="M46 100 a54 56 0 0 1 108 0 l-2 -14 a54 44 0 0 0 -104 0 z" fill="${a.hair}"/><path d="M46 100 q-4 26 4 40 l10 -4 q-6 -20 -4 -38z" fill="${a.hair}"/><path d="M154 100 q4 26 -4 40 l-10 -4 q6 -20 4 -38z" fill="${a.hair}"/>`;
+    extra += `<circle cx="46" cy="132" r="4.5" fill="#eec25e" stroke="#8a6410" stroke-width="1.4"/><circle cx="154" cy="132" r="4.5" fill="#eec25e" stroke="#8a6410" stroke-width="1.4"/>`;
+  } else if (robot) {
+    front = `<path d="M50 92 a50 52 0 0 1 100 0 l0 -18 a50 40 0 0 0 -100 0 z" fill="${a.hair}"/>`;
+    extra += `<line x1="100" y1="34" x2="100" y2="14" stroke="${ink}" stroke-width="4"/><circle cx="100" cy="11" r="6" fill="#dc2626" stroke="${ink}" stroke-width="2.5"/>`;
+    extra += `<text x="100" y="76" text-anchor="middle" font-size="21" font-weight="900" fill="#5b6b84" font-family="sans-serif">Ω</text>`;
+    extra += `<rect x="52" y="98" width="7" height="26" rx="3" fill="#8b96ab"/><rect x="141" y="98" width="7" height="26" rx="3" fill="#8b96ab"/>`;
+  }
+  // 髭（ワトソン・ゴードン）
+  let beard = "";
+  if (a.style === "watson") {
+    beard = `<path d="M70 136 q12 -8 30 -2 q18 -6 30 2 q-4 12 -16 10 q-14 -3 -28 0 q-12 2 -16 -10z" fill="${a.hair}"/>`;
+  } else if (a.style === "chief") {
+    beard = `<path d="M60 132 a46 42 0 0 0 80 0 a52 46 0 0 1 -80 0 z" fill="${a.hair}"/>`;
+  }
+  // 眉
+  let brows = "";
+  if (emotion === "angry") {
+    brows = `<path d="M63 86 L93 99" stroke="${ink}" stroke-width="6" stroke-linecap="round"/><path d="M137 86 L107 99" stroke="${ink}" stroke-width="6" stroke-linecap="round"/>`;
+  } else if (emotion === "doubt") {
+    brows = `<path d="M64 82 q14 -9 28 -3" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M108 94 L136 90" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>`;
+  } else if (emotion === "convinced") {
+    brows = `<path d="M64 86 q14 -9 28 -2" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M108 84 q14 -7 28 2" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  } else {
+    brows = `<path d="M65 90 q13 -5 27 -1" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M108 89 q14 -4 27 1" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  }
+  if (a.style === "oni" && emotion !== "angry") {
+    brows = `<path d="M63 88 L93 96" stroke="${ink}" stroke-width="5.5" stroke-linecap="round"/><path d="M137 88 L107 96" stroke="${ink}" stroke-width="5.5" stroke-linecap="round"/>`;
+  }
+  // 目
+  let eyes = "";
+  const eyeY = 108;
+  if (robot) {
+    const glow = emotion === "angry" ? "#dc2626" : emotion === "doubt" ? "#eab308" : emotion === "convinced" ? "#27ae60" : "#38bdf8";
+    if (emotion === "convinced") {
+      eyes = `<path d="M64 110 q14 -13 28 0" stroke="${glow}" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M108 110 q14 -13 28 0" stroke="${glow}" stroke-width="6" fill="none" stroke-linecap="round"/>`;
+    } else if (emotion === "angry") {
+      eyes = `<path d="M66 100 L92 116 M92 100 L66 116" stroke="${glow}" stroke-width="6" stroke-linecap="round"/><path d="M108 100 L134 116 M134 100 L108 116" stroke="${glow}" stroke-width="6" stroke-linecap="round"/>`;
+    } else {
+      eyes = `<rect x="64" y="100" width="28" height="13" rx="6" fill="${glow}"/><rect x="108" y="100" width="28" height="13" rx="6" fill="${glow}"/>`;
+    }
+  } else if (emotion === "convinced") {
+    eyes = `<path d="M64 110 q14 -13 28 0" stroke="${ink}" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M108 110 q14 -13 28 0" stroke="${ink}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  } else if (emotion === "doubt") {
+    eyes = `<path d="M64 102 L92 102" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/><path d="M108 102 L136 102" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/><circle cx="82" cy="112" r="4.6" fill="${ink}"/><circle cx="126" cy="112" r="4.6" fill="${ink}"/>`;
+  } else if (emotion === "angry") {
+    eyes = `<circle cx="78" cy="${eyeY}" r="6" fill="${ink}"/><circle cx="122" cy="${eyeY}" r="6" fill="${ink}"/><path d="M64 98 L92 104 M136 98 L108 104" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>`;
+  } else {
+    eyes = `<circle cx="78" cy="${eyeY}" r="5.8" fill="${ink}"/><circle cx="122" cy="${eyeY}" r="5.8" fill="${ink}"/><circle cx="80.2" cy="105.5" r="1.9" fill="#fff"/><circle cx="124.2" cy="105.5" r="1.9" fill="#fff"/>`;
+  }
+  // 口
+  let mouth = "";
+  if (robot) {
+    if (emotion === "angry") {
+      mouth = `<path d="M80 142 l6 6 l7 -6 l7 6 l7 -6 l7 6 l6 -6" stroke="#dc2626" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+    } else if (emotion === "convinced") {
+      mouth = `<path d="M82 140 q18 12 36 0" stroke="#27ae60" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+    } else {
+      mouth = `<g stroke="${ink}" stroke-width="3.4" stroke-linecap="round"><path d="M84 140 L84 150 M94 140 L94 150 M104 140 L104 150 M114 140 L114 150"/></g>`;
+    }
+  } else if (emotion === "convinced") {
+    mouth = a.style === "vip"
+      ? `<path d="M80 137 a20 15 0 0 0 40 0 z" fill="#b03050"/>`
+      : `<path d="M80 137 a20 15 0 0 0 40 0 z" fill="#7f1d1d"/>`;
+  } else if (emotion === "angry") {
+    mouth = `<ellipse cx="100" cy="146" rx="11" ry="9" fill="#7f1d1d"/><path d="M92 139 l16 0" stroke="#fff" stroke-width="3.4"/>`;
+  } else if (emotion === "doubt") {
+    mouth = `<path d="M86 146 L116 141" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/>`;
+  } else {
+    mouth = a.style === "vip"
+      ? `<path d="M86 140 q14 9 28 0" stroke="#b03050" stroke-width="5" fill="none" stroke-linecap="round"/>`
+      : `<path d="M86 140 q14 9 28 0" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  }
+  // 眼鏡・モノクル
+  let glasses = "";
+  if (a.style === "swirl") {
+    glasses = `<g fill="rgba(255,255,255,.10)" stroke="${ink}" stroke-width="4"><rect x="58" y="92" width="40" height="32" rx="9"/><rect x="102" y="92" width="40" height="32" rx="9"/></g><path d="M98 102 q2 -4 4 0" stroke="${ink}" stroke-width="4" fill="none"/>`;
+  }
+  if (a.style === "watson") {
+    glasses = `<circle cx="122" cy="108" r="21" fill="rgba(255,255,255,.12)" stroke="#8a6410" stroke-width="3.6"/><path d="M136 124 q8 14 2 26" stroke="#8a6410" stroke-width="2.6" fill="none"/>`;
+  }
+  const fx = [];
+  if (emotion === "angry" && !robot) {
+    fx.push(`<path d="M158 66 l10 -12 M160 78 l14 -6 M156 56 l4 -14" stroke="#dc2626" stroke-width="4.4" stroke-linecap="round"/>`);
+  }
+  if (emotion === "doubt") {
+    fx.push(`<text x="160" y="52" font-size="30" font-weight="900" fill="#b45309" font-family="sans-serif">?</text>`);
+  }
+  return `<svg viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="審査官の顔">`
+    + back
+    + `<ellipse cx="100" cy="106" rx="53" ry="57" fill="${a.skin}" stroke="${ink}" stroke-width="3.5"/>`
+    + (robot ? `<rect x="58" y="60" width="84" height="98" rx="16" fill="none" stroke="#8b96ab" stroke-width="2" opacity=".7"/>` : "")
+    + beard + brows + eyes + mouth + front + glasses + extra + fx.join("")
+    + `</svg>`;
+}
+
+/* ---------- 演出 ---------- */
+const confetti = (() => {
+  const cv = document.getElementById("confetti-canvas");
+  const ctx = cv.getContext("2d");
+  let parts = [], running = false;
+  const COLORS = ["#eec25e", "#c9962e", "#27ae60", "#0e7c7b", "#16324f", "#f97316"];
+  function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+  addEventListener("resize", resize); resize();
+  function tick() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    parts = parts.filter((p) => p.y < cv.height + 24);
+    for (const p of parts) {
+      p.y += p.vy; p.x += p.vx + Math.sin(p.y / 26) * 1.2; p.rot += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.62);
+      ctx.restore();
+    }
+    if (parts.length) requestAnimationFrame(tick);
+    else { running = false; ctx.clearRect(0, 0, cv.width, cv.height); }
+  }
+  return function spawn(n) {
+    for (let i = 0; i < n; i++) {
+      parts.push({
+        x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * 0.35,
+        vx: (Math.random() - 0.5) * 2.2, vy: 2.4 + Math.random() * 3.2,
+        s: 7 + Math.random() * 8, rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.24,
+        color: COLORS[i % COLORS.length],
+      });
+    }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  };
+})();
+function flashFx() {
+  const f = document.getElementById("fx-flash");
+  f.style.opacity = "0.85";
+  setTimeout(() => { f.style.opacity = "0"; }, 130);
+}
+function stampFx(text, kind) {
+  const s = document.getElementById("fx-stamp");
+  s.textContent = text;
+  s.classList.toggle("doubt", kind === "doubt");
+  s.classList.remove("show"); void s.offsetWidth; s.classList.add("show");
+  SFX.stamp();
+}
+function runPassEffect() {
+  SFX.pass();
+  confetti(80);
+  flashFx();
+}
+
+/* ---------- 画面遷移 ---------- */
+const SCREENS = ["title", "map", "intro", "session", "result", "memo"];
+function show(name) {
+  for (const s of SCREENS) {
+    document.getElementById("screen-" + s).classList.toggle("active", s === name);
+  }
+  const active = document.querySelector(".screen.active");
+  if (active) active.scrollTop = 0;
+}
+</script>
+<script>
+"use strict";
+/* ---------- タイトル ---------- */
+function refreshTitle() {
+  document.getElementById("title-bounty").textContent = prog.bounty;
+  document.getElementById("title-stamps").textContent = stampCount();
+  document.getElementById("title-rank").textContent = L.bountyTitle(prog.bounty);
+  document.getElementById("title-weak").textContent = weakCount();
+  const box = document.getElementById("title-faces");
+  box.innerHTML = "";
+  for (const c of CHAPTERS) for (const st of c.stages) {
+    const d = document.createElement("div");
+    d.className = "ta-face";
+    d.innerHTML = renderInspector(st.inspector.id, "normal");
+    box.appendChild(d);
+  }
+}
+
+/* ---------- マップ ---------- */
+const ui = { level: "all" };
+function refreshMapStats() {
+  document.getElementById("map-bounty").textContent = prog.bounty;
+  document.getElementById("map-rank").textContent = L.bountyTitle(prog.bounty);
+  document.getElementById("map-stamps").textContent = stampCount();
+  document.getElementById("map-combo").textContent = prog.combo;
+  document.getElementById("map-best").textContent = prog.bestCombo;
+  document.getElementById("map-weak").textContent = weakCount();
+  document.getElementById("map-progress").style.width = (prog.bounty / TOTAL_BOUNTY * 100) + "%";
+}
+function renderLevelBar() {
+  const box = document.getElementById("level-bar");
+  box.querySelectorAll(".level-chip").forEach((el) => el.remove());
+  for (const lv of LEVELS) {
+    const n = CHAPTERS.reduce((acc, c) => acc + c.stages.filter((st) => L.matchesLevel(st, lv.id)).length, 0);
+    const b = document.createElement("button");
+    b.className = "level-chip" + (ui.level === lv.id ? " active" : "");
+    b.textContent = `${lv.label}（${n}）`;
+    b.onclick = () => { SFX.tap(); ui.level = lv.id; renderMap(); };
+    box.appendChild(b);
+  }
+}
+function renderMap() {
+  refreshMapStats();
+  renderLevelBar();
+  const box = document.getElementById("chapters-box");
+  box.innerHTML = "";
+  for (const c of CHAPTERS) {
+    const stages = c.stages.filter((st) => L.matchesLevel(st, ui.level));
+    if (!stages.length) continue;
+    const block = document.createElement("div");
+    block.className = "chapter-block";
+    const head = document.createElement("div");
+    head.className = "chapter-head";
+    head.style.borderLeftColor = CH_COLOR[c.chapter_id] || "var(--navy)";
+    head.textContent = `第${c.chapter_id}章 ${c.chapter_title}`;
+    block.appendChild(head);
+    const list = document.createElement("div");
+    list.className = "stages";
+    for (const st of stages) {
+      const done = st.missions.filter((m) => prog.stamps[m.mission_id]).length;
+      const earned = L.stageEarned(prog, st);
+      const total = L.stageBounty(st);
+      const card = document.createElement("button");
+      card.className = "stage-card";
+      card.style.borderLeftColor = CH_COLOR[c.chapter_id] || "var(--navy)";
+      card.innerHTML = `
+        <div class="st-face">${renderInspector(st.inspector.id, "normal")}</div>
+        <div class="st-main">
+          <div class="st-id">${st.stage_id} ／ ${L.escapeHtml(st.target_level)}</div>
+          <div class="st-title">${L.escapeHtml(st.stage_title)}</div>
+          <div class="st-author">${L.escapeHtml(st.inspector.name)}（${L.escapeHtml(st.inspector.role)}）</div>
+          <div class="st-meta">
+            <span class="st-prog">スタンプ ${done}/${st.missions.length} ・ バウンティ ${earned}/${total}</span>
+            <span class="mini-track"><span class="mini-fill" style="display:block;width:${st.missions.length ? done / st.missions.length * 100 : 0}%"></span></span>
+          </div>
+        </div>`;
+      card.onclick = () => { SFX.tap(); openIntro(c, st); };
+      list.appendChild(card);
+    }
+    block.appendChild(list);
+    box.appendChild(block);
+  }
+}
+
+/* ---------- ステージ紹介 ---------- */
+let introCtx = null;
+function openIntro(chapter, stage) {
+  introCtx = { chapter, stage };
+  const p = stage.inspector;
+  document.getElementById("intro-crumb").textContent = `第${chapter.chapter_id}章 ${stage.stage_id}`;
+  document.getElementById("intro-level").textContent = `${stage.target_level} ／ バウンティ ${L.stageEarned(prog, stage)}/${L.stageBounty(stage)}`;
+  document.getElementById("intro-title").textContent = stage.stage_title;
+  document.getElementById("intro-avatar").innerHTML = renderInspector(p.id, "normal");
+  document.getElementById("intro-author-name").textContent = p.name;
+  document.getElementById("intro-author-genre").textContent = p.role;
+  document.getElementById("intro-author-quirk").textContent = `このゲートの尋問は全${stage.missions.length}問。誤用すると即・検挙、正しい英語の嘘で突破するとスタンプとバウンティがもらえる。`;
+  document.getElementById("intro-greeting").textContent = "「" + p.opening_line + "」";
+  document.getElementById("intro-count").textContent = stage.missions.length;
+  const list = document.getElementById("intro-list");
+  list.innerHTML = "";
+  for (const m of stage.missions) {
+    const item = document.createElement("div");
+    item.className = "iv-item";
+    const state = prog.stamps[m.mission_id]
+      ? `<span class="iv-state done">突破済み</span>`
+      : prog.weak[m.mission_id]
+        ? `<span class="iv-state weak">リベンジ待ち</span>`
+        : `<span class="iv-state todo">未挑戦</span>`;
+    const mode = m.input_mode === "lie_compose" ? "自由英作文" : "選択式";
+    item.innerHTML = `${state}<span>${L.escapeHtml(m.topic_tag)}（${mode}）</span>`;
+    list.appendChild(item);
+  }
+  show("intro");
+}
+
+/* ---------- セッション ---------- */
+let session = null;
+let memoReturn = "title";
+function startStage(chapter, stage) {
+  session = {
+    mode: "stage", chapter, stage,
+    queue: stage.missions.slice(), idx: 0,
+    wrongAttempts: 0, solvedCount: 0, gainTotal: 0, gaveUpCount: 0,
+    solved: false, gaveUp: false,
+  };
+  show("session");
+  loadMission();
+}
+function startSingle(missionId) {
+  const hit = M_INDEX.get(missionId);
+  if (!hit) return;
+  session = {
+    mode: "single", chapter: hit.chapter, stage: hit.stage,
+    queue: [hit.mission], idx: 0,
+    wrongAttempts: 0, solvedCount: 0, gainTotal: 0, gaveUpCount: 0,
+    solved: false, gaveUp: false,
+  };
+  show("session");
+  loadMission();
+}
+function currentMission() { return session.queue[session.idx]; }
+function setInspectorFace(emotion, aura, lean) {
+  const box = document.getElementById("session-avatar");
+  box.innerHTML = renderInspector(session.stage.inspector.id, emotion);
+  box.classList.toggle("aura", !!aura);
+  box.classList.remove("lean"); void box.offsetWidth;
+  if (lean) box.classList.add("lean");
+}
+function refreshInspectorLine() {
+  document.getElementById("session-author-int").textContent =
+    `このゲートのバウンティ ${L.stageEarned(prog, session.stage)}/${L.stageBounty(session.stage)} ・ 総バウンティ ${prog.bounty}`;
+}
+function addMsg(cls, who, text, misuse) {
+  const feed = document.getElementById("dialogue-feed");
+  const d = document.createElement("div");
+  d.className = "msg " + cls;
+  d.innerHTML = `<span class="msg-who">${L.escapeHtml(who)}</span>${L.escapeHtml(text)}`
+    + (misuse ? `<span class="misuse">検挙理由：${L.escapeHtml(misuse)}</span>` : "");
+  feed.appendChild(d);
+  feed.scrollTop = feed.scrollHeight;
+  return d;
+}
+function addNode(node) {
+  const feed = document.getElementById("dialogue-feed");
+  feed.appendChild(node);
+  feed.scrollTop = feed.scrollHeight;
+  return node;
+}
+function examCardHtml(m) {
+  const es = m.exam_note;
+  return `<div class="sc-head">受験メモ：${L.escapeHtml(es.headline)}</div>
+    <div class="sc-label">鉄則</div><div class="sc-text">${L.escapeHtml(es.rule)}</div>
+    <div class="sc-label">陥りやすい罠</div><div class="sc-text trap">${L.escapeHtml(es.pitfall)}</div>`;
+}
+function showExamCard(m) {
+  const d = document.createElement("div");
+  d.className = "strategy-card";
+  d.innerHTML = examCardHtml(m);
+  addNode(d);
+}
+function loadMission() {
+  const m = currentMission();
+  const p = session.stage.inspector;
+  session.wrongAttempts = 0;
+  session.solved = false;
+  session.gaveUp = false;
+  document.getElementById("session-stage-badge").textContent = session.stage.stage_id + " ・ 第" + session.chapter.chapter_id + "章";
+  document.getElementById("session-topic").textContent = m.topic_tag;
+  document.getElementById("session-count").textContent = `${session.idx + 1} / ${session.queue.length}`;
+  document.getElementById("session-progress").style.width = (session.idx / session.queue.length * 100) + "%";
+  document.getElementById("session-author-name").textContent = p.name;
+  refreshInspectorLine();
+  document.getElementById("situation-text").textContent = m.situation;
+  document.getElementById("goal-text").textContent = m.target_lie_goal;
+  document.getElementById("next-row").style.display = "none";
+  const feed = document.getElementById("dialogue-feed");
+  feed.innerHTML = "";
+  setInspectorFace("normal", false, false);
+  if (session.idx === 0) addMsg("author", p.name, p.opening_line);
+  addMsg("author", p.name, m.inspector_question);
+  renderInput(m);
+  feed.scrollTop = 0;
+}
+function renderInput(m) {
+  const area = document.getElementById("input-area");
+  area.innerHTML = "";
+  area.style.display = "";
+  if (m.input_mode === "lie_compose") {
+    const chips = document.createElement("div");
+    chips.className = "hint-chips";
+    chips.innerHTML = `<span class="hc-label2">突破の型：</span><span class="hint-chip">${L.escapeHtml(m.topic_tag)}</span><span class="hint-chip">${L.escapeHtml(m.target_lie_goal)}</span>`;
+    area.appendChild(chips);
+    const ta = document.createElement("textarea");
+    ta.id = "free-input";
+    ta.placeholder = "英語で言い訳を入力：正しい文法・語法の嘘で審査官を騙そう";
+    ta.setAttribute("aria-label", "英語の言い訳を入力");
+    ta.setAttribute("lang", "en");
+    area.appendChild(ta);
+    const row = document.createElement("div");
+    row.className = "free-row";
+    const send = document.createElement("button");
+    send.className = "btn gold";
+    send.textContent = "言い訳する！";
+    send.onclick = () => submitFree();
+    row.appendChild(send);
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR) {
+      const mic = document.createElement("button");
+      mic.className = "mic-btn";
+      mic.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#1f2430" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="#1f2430" stroke="none"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>`;
+      mic.setAttribute("aria-label", "音声入力");
+      mic.onclick = () => startVoice(mic, ta);
+      row.appendChild(mic);
+    }
+    area.appendChild(row);
+  } else {
+    const box = document.createElement("div");
+    box.className = "choices";
+    for (const c of m.choices || []) {
+      const b = document.createElement("button");
+      b.className = "choice-btn";
+      b.dataset.choiceId = c.id;
+      b.innerHTML = `<span class="ch-id">${L.escapeHtml(c.id)}</span><span>${L.escapeHtml(c.label)}</span>`;
+      b.onclick = () => submitChoice(m, c, b);
+      box.appendChild(b);
+    }
+    area.appendChild(box);
+  }
+  maybeShowGiveUp(m);
+}
+function maybeShowGiveUp(m) {
+  if (session.solved || session.gaveUp) return;
+  if (session.wrongAttempts < 2) return;
+  const area = document.getElementById("input-area");
+  if (area.querySelector(".giveup-row")) return;
+  const row = document.createElement("div");
+  row.className = "giveup-row";
+  const b = document.createElement("button");
+  b.className = "linklike";
+  b.textContent = "どうしても突破できなければ、正しい嘘の文例を見る（スタンプはもらえず、リベンジ待ちに残ります）";
+  b.onclick = () => giveUp(m);
+  row.appendChild(b);
+  area.appendChild(row);
+}
+function startVoice(btn, ta) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  try {
+    const rec = new SR();
+    rec.lang = "en-US";
+    rec.interimResults = false;
+    btn.classList.add("rec");
+    rec.onresult = (ev) => {
+      const text = ev.results[0][0].transcript || "";
+      ta.value = (ta.value ? ta.value + " " : "") + text;
+    };
+    rec.onend = () => btn.classList.remove("rec");
+    rec.onerror = () => btn.classList.remove("rec");
+    rec.start();
+  } catch (e) { btn.classList.remove("rec"); }
+}
+const FALLBACK_LINES = [
+  "……何を言っているのか分からんな。その言い訳ではゲートは開かんぞ。",
+  "ふむ、怪しいな。文法か語法がズレている気がするぞ。もう一度だ。",
+  "ダウト！ その英語では通さん。『嘘の目標』に合う正しい型で言い直せ。",
+];
+function afterWrong(m, verdict) {
+  L.applyWrong(prog, m.mission_id);
+  session.wrongAttempts++;
+  saveProgress();
+  const card = document.getElementById("session-card");
+  card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+  SFX.boke();
+  stampFx("DOUBT! 誤用検挙", "doubt");
+  const p = session.stage.inspector;
+  setInspectorFace(session.wrongAttempts >= 2 ? "angry" : "doubt", false, false);
+  if (verdict.result === "trap" && verdict.trap) {
+    addMsg("pushback", p.name + "（検挙！）", verdict.trap.comedy_tsukkomi, verdict.trap.misuse_meaning);
+  } else {
+    addMsg("pushback", p.name + "（疑いの目）", FALLBACK_LINES[Math.min(session.wrongAttempts - 1, FALLBACK_LINES.length - 1)]);
+  }
+  maybeShowGiveUp(m);
+}
+function submitFree() {
+  if (!session || session.solved || session.gaveUp) return;
+  const m = currentMission();
+  const ta = document.getElementById("free-input");
+  const text = (ta.value || "").trim();
+  if (!text) { ta.focus(); return; }
+  addMsg("user", "旅行者（キミ）", text);
+  const verdict = L.judgeFreeText(m, text);
+  if (verdict.result === "correct") passMission(m);
+  else afterWrong(m, verdict);
+}
+function submitChoice(m, choice, btn) {
+  if (!session || session.solved || session.gaveUp) return;
+  addMsg("user", "旅行者（キミ）", choice.label);
+  const verdict = L.judgeChoice(m, choice.id);
+  if (verdict.result === "correct") passMission(m);
+  else {
+    btn.disabled = true;
+    btn.style.opacity = ".45";
+    afterWrong(m, verdict);
+  }
+}
+function finishMissionUI() {
+  document.getElementById("input-area").style.display = "none";
+  const row = document.getElementById("next-row");
+  row.style.display = "";
+  const last = session.idx + 1 >= session.queue.length;
+  document.getElementById("btn-next-mission").textContent = last ? "結果を見る →" : "次の尋問へ →";
+  document.getElementById("session-progress").style.width = ((session.idx + 1) / session.queue.length * 100) + "%";
+  const feed = document.getElementById("dialogue-feed");
+  feed.scrollTop = feed.scrollHeight;
+}
+function passMission(m) {
+  session.solved = true;
+  const res = L.applyPass(prog, m, session.wrongAttempts);
+  session.solvedCount++;
+  session.gainTotal += res.pointsAdded;
+  saveProgress();
+  const pr = m.pass_reaction;
+  const p = session.stage.inspector;
+  runPassEffect();
+  stampFx(pr.stamp_text, "pass");
+  setInspectorFace("convinced", true, true);
+  addMsg("pass", p.name + "（納得）", pr.inspector_line);
+  const card = document.createElement("div");
+  card.className = "stamp-card";
+  card.innerHTML = `<div class="hc-label">ゲート突破 ― スタンプ帳に押しました</div>`
+    + `<span class="hc-stamp">${L.escapeHtml(pr.stamp_text)}</span>`
+    + `<div class="hc-text">${L.escapeHtml(m.correct_answer.canonical_english)}</div>`
+    + `<div class="hc-gain">${res.pointsAdded > 0 ? "バウンティ +" + res.pointsAdded : "バウンティは獲得済み（再突破で腕が上がった！）"}</div>`;
+  addNode(card);
+  showExamCard(m);
+  refreshInspectorLine();
+  finishMissionUI();
+}
+function giveUp(m) {
+  if (session.solved || session.gaveUp) return;
+  session.gaveUp = true;
+  session.gaveUpCount++;
+  L.applyWrong(prog, m.mission_id);
+  saveProgress();
+  SFX.tap();
+  setInspectorFace("doubt", false, false);
+  addMsg("memo", "正しい嘘の文例", m.correct_answer.canonical_english);
+  addMsg("memo", "税関メモ", "スタンプは自分の英語で突破してこそ獲得できます。この尋問はスタンプ帳の「リベンジ待ち」に残ります。");
+  showExamCard(m);
+  finishMissionUI();
+}
+function nextMission() {
+  SFX.tap();
+  if (session.idx + 1 < session.queue.length) {
+    session.idx++;
+    loadMission();
+  } else {
+    showResult();
+  }
+}
+function showResult() {
+  document.getElementById("result-bounty").textContent = prog.bounty;
+  document.getElementById("result-rank").textContent = L.bountyTitle(prog.bounty);
+  const list = document.getElementById("result-list");
+  const rows = [];
+  if (session.mode === "stage") {
+    rows.push(["ゲート", `${session.stage.stage_id} ${session.stage.stage_title}`]);
+    rows.push(["突破できた尋問", `${session.solvedCount} / ${session.queue.length}`]);
+  } else {
+    rows.push(["リベンジ", currentMission().topic_tag]);
+    rows.push(["結果", session.solved ? (session.wrongAttempts === 0 ? "一発突破！リストから卒業" : "突破！（リストには残ります）") : "また今度リベンジ"]);
+  }
+  rows.push(["獲得したバウンティ", `+${session.gainTotal}`]);
+  rows.push(["獲得スタンプ（累計）", `${stampCount()} / ${TOTAL_MISSIONS}`]);
+  rows.push(["最高コンボ", `${prog.bestCombo}`]);
+  list.innerHTML = rows.map(([k, v]) => `<div class="result-item"><span>${L.escapeHtml(k)}</span><span>${L.escapeHtml(v)}</span></div>`).join("");
+  document.getElementById("result-weak").textContent = weakCount();
+  show("result");
+}
+
+/* ---------- スタンプ帳 ---------- */
+function renderMemo() {
+  const body = document.getElementById("memo-body");
+  body.innerHTML = "";
+  let any = false;
+  for (const c of CHAPTERS) for (const st of c.stages) {
+    const p = st.inspector;
+    const head = document.createElement("div");
+    head.className = "memo-author-head";
+    head.innerHTML = `<div class="ma-face">${renderInspector(p.id, "normal")}</div>
+      <div><div class="ma-name">${L.escapeHtml(p.name)}</div>
+      <div class="ma-int">${st.stage_id} ・ バウンティ ${L.stageEarned(prog, st)}/${L.stageBounty(st)}</div></div>`;
+    body.appendChild(head);
+    for (const m of st.missions) {
+      any = true;
+      const item = document.createElement("div");
+      item.className = "memo-item";
+      const modeLabel = m.input_mode === "lie_compose" ? "自由英作文" : "選択式";
+      let inner = `<div class="mi-topic">${L.escapeHtml(m.topic_tag)}</div>
+        <div class="mi-meta">${st.stage_id} ／ ${modeLabel} ／ 弱点：${L.escapeHtml(m.weakness_category)} ／ ${m.pass_reaction.bounty_points}ポイント</div>`;
+      if (prog.stamps[m.mission_id]) {
+        inner += `<span class="mi-stamp">${L.escapeHtml(m.pass_reaction.stamp_text)}</span>
+          <div class="mi-honne">${L.escapeHtml(m.correct_answer.canonical_english)}</div>
+          <div class="mi-strategy">${L.escapeHtml(m.exam_note.headline)} ― ${L.escapeHtml(m.exam_note.rule)}（罠：${L.escapeHtml(m.exam_note.pitfall)}）</div>`;
+      } else {
+        inner += `<div class="mi-locked">${prog.weak[m.mission_id]
+          ? "まだ突破できていません。正しい嘘の文例は確認済みです。自分の英語で言い直して、スタンプを獲得しましょう。"
+          : "まだ挑戦していません。審査官の尋問に、正しい英語の嘘で切り抜けましょう。"}</div>
+          <div class="mi-row"><button class="btn gold">${prog.weak[m.mission_id] ? "リベンジする" : "挑戦する"}</button></div>`;
+      }
+      item.innerHTML = inner;
+      const btn = item.querySelector(".mi-row .btn");
+      if (btn) btn.onclick = () => { SFX.tap(); startSingle(m.mission_id); };
+      body.appendChild(item);
+    }
+  }
+  if (!any) body.innerHTML = `<div class="empty-note">スタンプ帳はまだ空です。</div>`;
+}
+
+/* ---------- 画面遷移ボタン ---------- */
+document.getElementById("btn-to-map").onclick = () => { SFX.tap(); renderMap(); show("map"); };
+document.getElementById("btn-to-memo").onclick = () => { SFX.tap(); memoReturn = "title"; renderMemo(); show("memo"); };
+document.getElementById("btn-back-title").onclick = () => { SFX.tap(); refreshTitle(); show("title"); };
+document.getElementById("btn-back-map").onclick = () => { SFX.tap(); renderMap(); show("map"); };
+document.getElementById("btn-start-stage").onclick = () => { SFX.fanfare(); if (introCtx) startStage(introCtx.chapter, introCtx.stage); };
+document.getElementById("btn-intro-memo").onclick = () => { SFX.tap(); memoReturn = "intro"; renderMemo(); show("memo"); };
+document.getElementById("btn-quit-session").onclick = () => { SFX.tap(); renderMap(); show("map"); };
+document.getElementById("btn-next-mission").onclick = () => nextMission();
+document.getElementById("btn-result-map").onclick = () => { SFX.tap(); renderMap(); show("map"); };
+document.getElementById("btn-result-memo").onclick = () => { SFX.tap(); memoReturn = "map"; renderMemo(); show("memo"); };
+document.getElementById("btn-memo-back").onclick = () => {
+  SFX.tap();
+  if (memoReturn === "title") { refreshTitle(); show("title"); }
+  else if (memoReturn === "intro" && introCtx) show("intro");
+  else { renderMap(); show("map"); }
+};
+document.getElementById("sound-toggle-title").onclick = toggleMute;
+document.getElementById("sound-toggle-map").onclick = toggleMute;
+document.getElementById("sound-toggle-memo").onclick = toggleMute;
+document.getElementById("btn-update").onclick = () => {
+  const u = new URL(location.href);
+  u.searchParams.set("v", "1.0.0-" + Date.now());
+  location.href = u.toString();
+};
+
+refreshSoundToggles();
+refreshTitle();
+show("title");
+</script>
+</body>
+</html>
